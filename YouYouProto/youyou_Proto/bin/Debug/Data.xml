@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <Menu MenuId="636191639980995351" MenuName="系统相关" HasChild="true">
+    <Proto ProtoID="636191640570306165" ProtoCode="14001" ProtoEnName="System_SendLocalTime" ProtoCnName="客户端发送本地时间" ProtoDesc="">
+      <Attr AttID="636191641910413686" AttType="float" AttEnName="LocalTime" AttCnName="本地时间(毫秒)" AttIsLoop="false" AttToLoop="" AttToBool="" AttToBoolResult="false" AttToCus="" />
+    </Proto>
+    <Proto ProtoID="636191641969648279" ProtoCode="14002" ProtoEnName="System_ServerTimeReturn" ProtoCnName="服务器返回服务器时间" ProtoDesc="">
+      <Attr AttID="636191643359810618" AttType="float" AttEnName="LocalTime" AttCnName="客户端发送的本地时间(毫秒)" AttIsLoop="false" AttToLoop="" AttToBool="" AttToBoolResult="false" AttToCus="" />
+      <Attr AttID="636191643359810619" AttType="long" AttEnName="ServerTime" AttCnName="服务器时间(毫秒)" AttIsLoop="false" AttToLoop="" AttToBool="" AttToBoolResult="false" AttToCus="" />
+    </Proto>
+    <Proto ProtoID="636364389778581120" ProtoCode="14003" ProtoEnName="System_GameServerConfigReturn" ProtoCnName="服务器返回配置列表" ProtoDesc="">
+      <Attr AttID="636364394920034933" AttType="int" AttEnName="ConfigCount" AttCnName="配置数量" AttIsLoop="true" AttToLoop="" AttToBool="" AttToBoolResult="false" AttToCus="" />
+      <Attr AttID="636364392389525157" AttType="ConfigItem" AttEnName="ServerConfig" AttCnName="配置项" AttIsLoop="false" AttToLoop="ConfigCount" AttToBool="" AttToBoolResult="false" AttToCus="" />
+      <Attr AttID="636364392389525158" AttType="string" AttEnName="ConfigCode" AttCnName="配置编码" AttIsLoop="false" AttToLoop="" AttToBool="" AttToBoolResult="false" AttToCus="ServerConfig" />
+      <Attr AttID="636364392389525159" AttType="bool" AttEnName="IsOpen" AttCnName="是否开启" AttIsLoop="false" AttToLoop="" AttToBool="" AttToBoolResult="false" AttToCus="ServerConfig" />
+      <Attr AttID="636364392389525160" AttType="string" AttEnName="Param" AttCnName="参数" AttIsLoop="false" AttToLoop="" AttToBool="" AttToBoolResult="false" AttToCus="ServerConfig" />
+    </Proto>
+    <Proto ProtoID="637733633494517305" ProtoCode="14004" ProtoEnName="CS_Get_Datail" ProtoCnName="获取邮件详情" ProtoDesc="获取邮件详情">
+      <Attr AttID="637733636130322465" AttType="bool" AttEnName="IsSuccess" AttCnName="是否成功" AttIsLoop="false" AttToLoop="" AttToBool="" AttToBoolResult="false" AttToCus="" />
+      <Attr AttID="637733636130322466" AttType="string" AttEnName="Name " AttCnName="邮件名字" AttIsLoop="false" AttToLoop="" AttToBool="IsSuccess" AttToBoolResult="true" AttToCus="" />
+      <Attr AttID="637733636130322467" AttType="ushort" AttEnName="ErrorCode" AttCnName="错误编码" AttIsLoop="false" AttToLoop="" AttToBool="IsSuccess" AttToBoolResult="false" AttToCus="" />
+    </Proto>
+    <Proto ProtoID="637733639001064497" ProtoCode="14005" ProtoEnName="CS_Ret_List" ProtoCnName="测试协议" ProtoDesc="测试协议">
+      <Attr AttID="637733641615721573" AttType="int" AttEnName="ItemCount" AttCnName="元素数量" AttIsLoop="true" AttToLoop="" AttToBool="" AttToBoolResult="false" AttToCus="" />
+      <Attr AttID="637733641615721574" AttType="int" AttEnName="ItemId" AttCnName="元素Id" AttIsLoop="false" AttToLoop="ItemCount" AttToBool="" AttToBoolResult="false" AttToCus="" />
+      <Attr AttID="637733641615721575" AttType="string" AttEnName="ItemName" AttCnName="元素名字" AttIsLoop="false" AttToLoop="ItemCount" AttToBool="" AttToBoolResult="false" AttToCus="" />
+    </Proto>
+  </Menu>
+  <Menu MenuId="636006720633545586" MenuName="登陆管理" HasChild="true">
+    <Proto ProtoID="637733619207976434" ProtoCode="10001" ProtoEnName="CS_Login" ProtoCnName="登陆协议" ProtoDesc="客户端请求登陆协议">
+      <Attr AttID="637733621194761613" AttType="string" AttEnName="Id" AttCnName="账号" AttIsLoop="false" AttToLoop="" AttToBool="" AttToBoolResult="false" AttToCus="" />
+      <Attr AttID="637733621194761614" AttType="string" AttEnName="Pw" AttCnName="密码" AttIsLoop="false" AttToLoop="" AttToBool="" AttToBoolResult="false" AttToCus="" />
+    </Proto>
+    <Proto ProtoID="637733672461781246" ProtoCode="10002" ProtoEnName="SC_Login" ProtoCnName="服务器返回登陆状态" ProtoDesc="服务器返回登陆状态">
+      <Attr AttID="637733674069302787" AttType="bool" AttEnName="IsSuccess" AttCnName="是否成功" AttIsLoop="false" AttToLoop="" AttToBool="" AttToBoolResult="false" AttToCus="" />
+    </Proto>
+  </Menu>
+</Root>

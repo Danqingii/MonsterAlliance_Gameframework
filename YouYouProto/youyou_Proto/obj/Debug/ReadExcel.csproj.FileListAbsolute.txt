@@ -1,0 +1,34 @@
+d:\documents\visual studio 2013\Projects\ReadExcel\ReadExcel\bin\Debug\ReadExcel.exe.config
+d:\documents\visual studio 2013\Projects\ReadExcel\ReadExcel\bin\Debug\ReadExcel.exe
+d:\documents\visual studio 2013\Projects\ReadExcel\ReadExcel\bin\Debug\ReadExcel.pdb
+d:\documents\visual studio 2013\Projects\ReadExcel\ReadExcel\obj\Debug\ReadExcel.csprojResolveAssemblyReference.cache
+d:\documents\visual studio 2013\Projects\ReadExcel\ReadExcel\obj\Debug\ReadExcel.ExcelToByte.resources
+d:\documents\visual studio 2013\Projects\ReadExcel\ReadExcel\obj\Debug\ReadExcel.Properties.Resources.resources
+d:\documents\visual studio 2013\Projects\ReadExcel\ReadExcel\obj\Debug\ReadExcel.csproj.GenerateResource.Cache
+d:\documents\visual studio 2013\Projects\ReadExcel\ReadExcel\obj\Debug\ReadExcel.exe
+d:\documents\visual studio 2013\Projects\ReadExcel\ReadExcel\obj\Debug\ReadExcel.pdb
+d:\documents\visual studio 2013\Projects\ReadExcel\ReadExcel\obj\Debug\Interop.XDocsDesigner.dll
+d:\documents\visual studio 2013\Projects\ReadExcel\ReadExcel\obj\Debug\ReadExcel.csproj.ResolveComReference.cache
+D:\Documents\Visual Studio 2013\Projects\ReadExcel\ReadExcel\bin\Debug\ZipForge.dll
+D:\Documents\Visual Studio 2013\Projects\ReadExcel\ReadExcel\bin\Debug\ZipForge.xml
+D:\BaiduYunDownload\ReadExcel\ReadExcel\bin\Debug\ReadExcel.exe.config
+D:\BaiduYunDownload\ReadExcel\ReadExcel\obj\Debug\Interop.XDocsDesigner.dll
+D:\BaiduYunDownload\ReadExcel\ReadExcel\obj\Debug\ReadExcel.csproj.ResolveComReference.cache
+D:\BaiduYunDownload\ReadExcel\ReadExcel\obj\Debug\ReadExcel.exe
+D:\BaiduYunDownload\ReadExcel\ReadExcel\obj\Debug\ReadExcel.pdb
+D:\BaiduYunDownload\ReadExcel\ReadExcel\bin\Debug\ReadExcel.exe
+D:\BaiduYunDownload\ReadExcel\ReadExcel\bin\Debug\ReadExcel.pdb
+D:\BaiduYunDownload\ReadExcel\ReadExcel\bin\Debug\ZipForge.dll
+D:\BaiduYunDownload\ReadExcel\ReadExcel\bin\Debug\ZipForge.xml
+D:\BaiduYunDownload\ReadExcel\ReadExcel\obj\Debug\ReadExcel.csprojResolveAssemblyReference.cache
+D:\BaiduYunDownload\ReadExcel\ReadExcel\obj\Debug\ReadExcel.ExcelToByte.resources
+D:\BaiduYunDownload\ReadExcel\ReadExcel\obj\Debug\ReadExcel.Properties.Resources.resources
+D:\BaiduYunDownload\ReadExcel\ReadExcel\obj\Debug\ReadExcel.csproj.GenerateResource.Cache
+D:\BaiduYunDownload\ReadExcel\ReadExcel\obj\Debug\ReadExcel.frmMSG.resources
+D:\BaiduYunDownload\ReadExcel\ReadExcel\bin\Debug\Data.xml
+D:\BaiduYunDownload\ReadExcel\ReadExcel\obj\Debug\ReadExcel.frmModelEdit.resources
+F:\YouYouTools\Proto\ReadExcel\ReadExcel\bin\Debug\ReadExcel.exe.config
+F:\YouYouTools\Proto\ReadExcel\ReadExcel\obj\Debug\Interop.XDocsDesigner.dll
+F:\YouYouTools\Proto\ReadExcel\ReadExcel\obj\Debug\ReadExcel.csproj.ResolveComReference.cache
+F:\YouYouTools\Proto\ReadExcel\ReadExcel\obj\Debug\ReadExcel.exe
+F:\YouYouTools\Proto\ReadExcel\ReadExcel\obj\Debug\ReadExcel.pdb

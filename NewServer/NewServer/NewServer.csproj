@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4C2455F3-4052-4564-A3A6-B269CC1395E9}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>NewServer</RootNamespace>
+    <AssemblyName>NewServer</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>C:\Users\20200506QASD\Desktop\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\CustomMemoryStream.cs" />
+    <Compile Include="Common\Crc16.cs" />
+    <Compile Include="Common\CompressionHelper.cs" />
+    <Compile Include="DBModel\LoginDBModel.cs" />
+    <Compile Include="EventDispatcher.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ClientSocket.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="Proto\CS_LoginProto.cs" />
+    <Compile Include="Proto\IProto.cs" />
+    <Compile Include="Proto\ProtoCodeDef.cs" />
+    <Compile Include="Proto\SC_LoginProto.cs" />
+    <Compile Include="Proto\TestProto.cs" />
+    <Compile Include="Role.cs" />
+    <Compile Include="RoleManager.cs" />
+    <Compile Include="Common\SecurityUtil.cs" />
+    <Compile Include="ServerManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="C:\Users\20200506QASD\Desktop\ICSharpCode.SharpZipLib.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
