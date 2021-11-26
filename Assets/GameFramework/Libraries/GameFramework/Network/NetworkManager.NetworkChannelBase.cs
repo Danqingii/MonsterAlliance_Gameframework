@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using UnityEngine;
 
 namespace GameFramework.Network
 {
@@ -241,7 +242,7 @@ namespace GameFramework.Network
             }
 
             /// <summary>
-            /// 网络频道轮询。
+            /// 网络频道轮询。 其实主要在当前类 就处理心跳包
             /// </summary>
             /// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
             /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
@@ -252,19 +253,21 @@ namespace GameFramework.Network
                     return;
                 }
 
-                ProcessSend();   //程序发送 也就是包发送
-                ProcessReceive();//程序接收 包接收
+                ProcessSend();   //包轮询发送
+                ProcessReceive();//包轮询接收
+                
                 if (m_Socket == null || !m_Active)
                 {
                     return;
                 }
 
-                //接收消息包池  为啥也要Update!!!  不是已经在EventManager里面轮询了吗
+                //接收消息包池  为啥也要Update!!!  不是已经在EventManager模块里面轮询了吗
                 m_ReceivePacketPool.Update(elapseSeconds, realElapseSeconds);
 
+                //m_HeartBeatInterval = 30 > 0  等待发送心跳包
                 if (m_HeartBeatInterval > 0f)
                 {
-                    bool sendHeartBeat = false;  //发送心跳包
+                    bool sendHeartBeat = false;  //是否发送心跳包
                     int missHeartBeatCount = 0;  //未成功的心跳包数量
                     lock (m_HeartBeatState)
                     {
@@ -273,21 +276,23 @@ namespace GameFramework.Network
                             return;
                         }
 
+                        //心跳包流逝的时间累加
                         m_HeartBeatState.HeartBeatElapseSeconds += realElapseSeconds;
-                        
-                        //如果心跳包的时间 大于了心跳包间隔时间  代表客户端与服务器 未通信
+                       
+                        //如果心跳包流逝的时候 >= 心跳包间隔(30秒)  代表客户端与服务器 未通信
                         if (m_HeartBeatState.HeartBeatElapseSeconds >= m_HeartBeatInterval)
                         {
                             sendHeartBeat = true;
                             missHeartBeatCount = m_HeartBeatState.MissHeartBeatCount;
-                            m_HeartBeatState.HeartBeatElapseSeconds = 0f;
-                            m_HeartBeatState.MissHeartBeatCount++;
+                            m_HeartBeatState.HeartBeatElapseSeconds = 0f;   //重置心跳包流逝时间
+                            m_HeartBeatState.MissHeartBeatCount++;          //miss心跳包累加
                         }
                     }
 
-                    //如果心跳包未发送 执行心跳包miss 回调
+                    //如果心跳包未发送  &&  发送心跳包失败了
                     if (sendHeartBeat && m_NetworkChannelHelper.SendHeartBeat())
                     {
+                        //执行网络频道心跳包未发送 回调
                         if (missHeartBeatCount > 0 && NetworkChannelMissHeartBeat != null)
                         {
                             NetworkChannelMissHeartBeat(this, missHeartBeatCount);
@@ -529,7 +534,7 @@ namespace GameFramework.Network
                     bool serializeResult = false;
                     try
                     {
-                        //序列化的同时 估计已经发送了消息包了
+                        //序列化消息
                         serializeResult = m_NetworkChannelHelper.Serialize(packet, m_SendState.Stream);
                     }
                     catch (Exception exception)

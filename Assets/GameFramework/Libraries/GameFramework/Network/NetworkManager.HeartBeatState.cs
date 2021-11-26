@@ -9,6 +9,9 @@ namespace GameFramework.Network
 {
     internal sealed partial class NetworkManager : GameFrameworkModule, INetworkManager
     {
+        /// <summary>
+        /// 心跳状态
+        /// </summary>
         private sealed class HeartBeatState
         {
             private float m_HeartBeatElapseSeconds;
@@ -21,7 +24,7 @@ namespace GameFramework.Network
             }
 
             /// <summary>
-            /// 心跳包 时间
+            /// 心跳包 流逝的时间
             /// </summary>
             public float HeartBeatElapseSeconds
             {

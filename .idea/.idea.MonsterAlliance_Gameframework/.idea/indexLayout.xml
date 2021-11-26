@@ -29,6 +29,7 @@
       <Path>Library</Path>
       <Path>Logs</Path>
       <Path>NewServer</Path>
+      <Path>Temp</Path>
       <Path>UserSettings</Path>
       <Path>YouYouProto</Path>
       <Path>obj</Path>

@@ -1,4 +1,6 @@
+using System.Net;
 using GameFramework.Fsm;
+using GameFramework.Network;
 using GameFramework.Procedure;
 using UnityEngine;
 
@@ -14,12 +16,26 @@ namespace Game
             }
         }
 
+        private NetworkChannelHelper helper;
+
         protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
         {
             base.OnEnter(procedureOwner);
-            
-            //测试下载
-            //int id = GameEntry.Download.AddDownload(Application.dataPath + "/Test/测试","https://blog.csdn.net/youshi520000/article/details/51492606");
+
+            helper = new NetworkChannelHelper();
+
+            INetworkChannel channel = GameEntry.Network.CreateNetworkChannel("Test", ServiceType.Tcp, helper);
+            channel.Connect(IPAddress.Parse("127.0.0.1"),17779);
+        }
+
+        protected override void OnUpdate(IFsm<IProcedureManager> procedureOwner, float elapseSeconds, float realElapseSeconds)
+        {
+            base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
+
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                helper.SendHeartBeat();
+            }
         }
     }
 }

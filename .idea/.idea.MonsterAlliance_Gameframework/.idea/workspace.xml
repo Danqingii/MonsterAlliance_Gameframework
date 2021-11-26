@@ -2,26 +2,40 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="053ab00c-8745-434b-941f-d5b85d300ee8" name="默认变更列表" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Plugins/ProtoBuf/Google.Protobuf.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Plugins/ProtoBuf/Google.Protobuf.dll.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MonsterAlliance_Gameframework/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MonsterAlliance_Gameframework/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.MonsterAlliance_Gameframework/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MonsterAlliance_Gameframework/.idea/indexLayout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.MonsterAlliance_Gameframework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MonsterAlliance_Gameframework/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assembly-CSharp-Editor.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp-Editor.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assembly-CSharp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GameFramework/Libraries/GameFramework/Network/NetworkManager.HeartBeatState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameFramework/Libraries/GameFramework/Network/NetworkManager.HeartBeatState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GameFramework/Libraries/GameFramework/Network/NetworkManager.NetworkChannelBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameFramework/Libraries/GameFramework/Network/NetworkManager.NetworkChannelBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scenes/Launcher.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scenes/Launcher.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Base/GameEntry.Custom.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Base/GameEntry.Custom.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Base/GameEntry.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Base/GameEntry.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/DataTable/DRScene.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/DataTable/DRScene.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/DataTable/DRUIForm.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/DataTable/DRUIForm.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/CSPacketHeader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/CSPacketHeader.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/NetworkChannelHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/NetworkChannelHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketHandlerBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketHandlerBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Procedure/ProcedureTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Procedure/ProcedureTest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/TcpNetwork/TcpNetworkComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/TcpNetwork/TcpNetworkComponent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Google.Protobuf.dll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Google.Protobuf.dll.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/GameFramework.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GameFramework.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/AssetImportWorker0-prev.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/AssetImportWorker0-prev.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/AssetImportWorker0.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/AssetImportWorker0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/AssetImportWorker1.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-AssetImportWorker0.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-AssetImportWorker0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe0.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe0.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe1.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe1.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe2.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe2.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe3.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe3.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe4.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe4.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe5.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe5.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe6.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe6.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe7.log" beforeDir="false" afterPath="$PROJECT_DIR$/Logs/shadercompiler-UnityShaderCompiler.exe7.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/.vs/NewServer/v16/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/NewServer/.vs/NewServer/v16/.suo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MonsterAlliance_Gameframework.sln" beforeDir="false" afterPath="$PROJECT_DIR$/MonsterAlliance_Gameframework.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NewServer/.vs/NewServer/v17/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/NewServer/.vs/NewServer/v17/.suo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/ClientSocket.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NewServer/NewServer/ClientSocket.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/DBModel/LoginDBModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NewServer/NewServer/DBModel/LoginDBModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/bin/Debug/NewServer.exe" beforeDir="false" afterPath="$PROJECT_DIR$/NewServer/NewServer/bin/Debug/NewServer.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/bin/Debug/NewServer.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/NewServer/NewServer/bin/Debug/NewServer.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NewServer/NewServer/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" beforeDir="false" afterPath="$PROJECT_DIR$/NewServer/NewServer/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NewServer/NewServer/obj/Debug/NewServer.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/NewServer/NewServer/obj/Debug/NewServer.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/obj/Debug/NewServer.csproj.CopyComplete" beforeDir="false" afterPath="$PROJECT_DIR$/NewServer/NewServer/obj/Debug/NewServer.csproj.CopyComplete" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/obj/Debug/NewServer.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/NewServer/NewServer/obj/Debug/NewServer.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/obj/Debug/NewServer.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/NewServer/NewServer/obj/Debug/NewServer.csproj.FileListAbsolute.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/obj/Debug/NewServer.exe" beforeDir="false" afterPath="$PROJECT_DIR$/NewServer/NewServer/obj/Debug/NewServer.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/obj/Debug/NewServer.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/NewServer/NewServer/obj/Debug/NewServer.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UnityGameFramework.Editor.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/UnityGameFramework.Editor.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UnityGameFramework.Runtime.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/UnityGameFramework.Runtime.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/Assembly-CSharp.csproj.AssemblyReference.cache" afterDir="false" />
@@ -55,17 +69,23 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/GameMain/Scripts/Proto/ProtoCodeDef.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/GameMain/Scripts/Test.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@3.0.6/Scripts/Runtime/TMP_InputField.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/obj/Debug/.NETFramework,Version=v4.7.1.AssemblyAttributes.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/GameMain/Scripts/Proto/ProtoCodeDef.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/48827A05-C015-4B4B-ADA3-2EAF5C10D8B0/f7/64bd7319/FieldInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/48827A05-C015-4B4B-ADA3-2EAF5C10D8B0/10/adac14da/Type.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/29A6C194-5F57-4474-95FC-AD42118554C7/16/7c3f5dbe/Socket.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/48827A05-C015-4B4B-ADA3-2EAF5C10D8B0/bf/6861c0ec/KeyValuePair`2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/GameMain/Scripts/Test.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/48827A05-C015-4B4B-ADA3-2EAF5C10D8B0/c2/3b16c6b2/StringComparer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/48827A05-C015-4B4B-ADA3-2EAF5C10D8B0/a3/8b4d95b1/Attribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@3.0.6/Scripts/Runtime/TMP_InputField.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/48827A05-C015-4B4B-ADA3-2EAF5C10D8B0/9f/3863e2dd/Assembly.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/48827A05-C015-4B4B-ADA3-2EAF5C10D8B0/d3/bed7fc9e/IEnumerable`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/48827A05-C015-4B4B-ADA3-2EAF5C10D8B0/27/bccc3030/MemoryStream.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/GameMain/Scripts/TcpNetwork/TcpNetworkComponent.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/GameFramework/Libraries/GameFramework/Download/DownloadManager.DownloadAgent.cs" />
-      <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/TcpNetwork/Tcp.cs" />
       <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/Procedure/ProcedureNetwork.cs" />
       <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/TcpNetwork/DataBuffer.Constants.cs" />
       <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/TcpNetwork/ReceiveSucceedEventArgs.cs" />
@@ -78,24 +98,18 @@
       <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/TcpNetwork/MessageManager.cs" />
       <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/TcpNetwork/CS_LOGINSERVER.cs" />
       <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/TcpNetwork/ClientTest.cs" />
-      <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/Procedure/ProcedureTest.cs" />
-      <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/Base/GameEntry.Custom.cs" />
       <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/TcpNetwork/CS_Loginserver.cs" />
       <option value="$PROJECT_DIR$/Assets/GameFramework/Scripts/Editor/Inspector/ReferencePoolComponentInspector.cs" />
       <option value="$PROJECT_DIR$/Assets/GameFramework/Scripts/Runtime/UI/UIComponent.cs" />
       <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/CSPacketBase.cs" />
       <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/SCPacketBase.cs" />
-      <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/CSPacketHeader.cs" />
       <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/SCPacketHeader.cs" />
       <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketBase.cs" />
       <option value="$PROJECT_DIR$/Assets/GameFramework/Libraries/GameFramework/Network/ServiceType.cs" />
       <option value="$PROJECT_DIR$/Assets/GameFramework/Libraries/GameFramework/Network/NetworkManager.SendState.cs" />
-      <option value="$PROJECT_DIR$/Assets/GameFramework/Libraries/GameFramework/Network/NetworkManager.HeartBeatState.cs" />
       <option value="$PROJECT_DIR$/Assets/GameFramework/Libraries/GameFramework/Network/NetworkManager.ReceiveState.cs" />
       <option value="$PROJECT_DIR$/Assets/GameFramework/Libraries/GameFramework/Network/NetworkManager.ConnectState.cs" />
-      <option value="$PROJECT_DIR$/Assets/GameFramework/Libraries/GameFramework/Network/NetworkManager.TcpNetworkChannel.cs" />
       <option value="$PROJECT_DIR$/Assets/GameFramework/Libraries/GameFramework/Network/NetworkManager.TcpWithSyncReceiveNetworkChannel.cs" />
-      <option value="$PROJECT_DIR$/Assets/GameFramework/Libraries/GameFramework/Network/NetworkManager.NetworkChannelBase.cs" />
       <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/Packet/CSHeartBeat.cs" />
       <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/Packet/SCHeartBeat.cs" />
       <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/TcpNetwork/TcpManager.cs" />
@@ -115,6 +129,14 @@
       <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/Test.cs" />
       <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/TcpNetwork/自定义数据包解析.txt" />
       <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/TcpNetwork/TcpNetworkComponent.cs" />
+      <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketHandlerBase.cs" />
+      <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/Base/GameEntry.Custom.cs" />
+      <option value="$PROJECT_DIR$/Assets/GameFramework/Libraries/GameFramework/Network/NetworkManager.TcpNetworkChannel.cs" />
+      <option value="$PROJECT_DIR$/Assets/GameFramework/Libraries/GameFramework/Network/NetworkManager.HeartBeatState.cs" />
+      <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/NetworkChannelHelper.cs" />
+      <option value="$PROJECT_DIR$/Assets/GameFramework/Libraries/GameFramework/Network/NetworkManager.NetworkChannelBase.cs" />
+      <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/Procedure/ProcedureTest.cs" />
+      <option value="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/CSPacketHeader.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1znUYszmXscp5wIU2l2oeg5d5r9" />
@@ -207,6 +229,7 @@
       <workItem from="1637748640016" duration="38000" />
       <workItem from="1637806610335" duration="13255000" />
       <workItem from="1637841367531" duration="59000" />
+      <workItem from="1637891183822" duration="22260000" />
     </task>
     <task id="LOCAL-00001" summary="加入本地MongoDB 有Bug 还未修正">
       <created>1634811951749</created>

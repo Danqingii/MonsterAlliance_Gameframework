@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\DanQing\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\DanQing\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_MonsterAlliance_Gameframework.-1565933550.00" t="ExcludeRecursive" />
-    <e p="E:\Unity Project\Study\MonsterAlliance_GameFramework" t="IncludeRecursive">
+    <e p="C:\Users\20200506QASD\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\20200506QASD\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_MonsterAlliance_Gameframework.-857038815.00" t="ExcludeRecursive" />
+    <e p="D:\Study\MonsterAlliance_GameFramework" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">

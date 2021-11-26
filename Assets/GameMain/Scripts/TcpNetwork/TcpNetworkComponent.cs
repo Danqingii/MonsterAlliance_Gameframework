@@ -146,7 +146,6 @@ namespace Game
             }
         }
 
-        #region 发送消息
         //检查队列的委托回调
         private void OnCheckSendQueneCallBack()
         {
@@ -220,10 +219,6 @@ namespace Game
 
             return buffer;
         }
-        
-        #endregion
-
-        #region 接收消息
 
          //接收数据
          private void ReceiveMessage()
@@ -340,6 +335,5 @@ namespace Game
                  ShutDown();
              }
          }
-         #endregion
     }
 }

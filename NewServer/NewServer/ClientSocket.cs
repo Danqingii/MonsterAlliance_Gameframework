@@ -62,6 +62,10 @@ public class ClientSocket
 
                 //如果缓存数据流的长度大于2  至少有一个不完整的包过来了
                 //为什么是2呢  因为我们客户端数据包 ushort 长度为2
+
+                //TODO
+                Log.Debug(len.ToString());
+
                 if(m_ReceiveMS.Length > 2)
                 {
                     //循环 拆包

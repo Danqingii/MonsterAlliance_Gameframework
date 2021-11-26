@@ -14,12 +14,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using UnityEngine;
 using UnityGameFramework.Runtime;
 
 namespace Game
 {
     public class NetworkChannelHelper : INetworkChannelHelper
     {
+        //服务器To客户端的 包类型
         private readonly Dictionary<int, Type> m_ServerToClientPacketTypes = new Dictionary<int, Type>();
         private readonly MemoryStream m_CachedStream = new MemoryStream(1024 * 8);
         private INetworkChannel m_NetworkChannel = null;
@@ -41,20 +43,23 @@ namespace Game
         /// <param name="networkChannel">网络频道。</param>
         public void Initialize(INetworkChannel networkChannel)
         {
+            Log.Debug("TODO 初始化网络频道");
+            
             m_NetworkChannel = networkChannel;
 
             // 反射注册包和包处理函数。
-            Type packetBaseType = typeof(SCPacketBase);
-            Type packetHandlerBaseType = typeof(PacketHandlerBase);
+            Type packetBaseType = typeof(SCPacketBase);               //服务器包-客户端包
+            Type packetHandlerBaseType = typeof(PacketHandlerBase);   //包处理者
             Assembly assembly = Assembly.GetExecutingAssembly();
             Type[] types = assembly.GetTypes();
             for (int i = 0; i < types.Length; i++)
             {
+                //不是类的 || 是接口的 跳出
                 if (!types[i].IsClass || types[i].IsAbstract)
                 {
                     continue;
                 }
-
+                
                 if (types[i].BaseType == packetBaseType)
                 {
                     PacketBase packetBase = (PacketBase)Activator.CreateInstance(types[i]);
@@ -65,12 +70,17 @@ namespace Game
                         continue;
                     }
 
+                    //包服务器的包注册进去
+                    Log.Debug($"TODO(1) {packetBase.Id} {types[i].FullName}");
                     m_ServerToClientPacketTypes.Add(packetBase.Id, types[i]);
                 }
                 else if (types[i].BaseType == packetHandlerBaseType)
                 {
+                    //注册 包处理者
                     IPacketHandler packetHandler = (IPacketHandler)Activator.CreateInstance(types[i]);
                     m_NetworkChannel.RegisterHandler(packetHandler);
+                    
+                    Log.Debug($"TODO(2) {packetHandler.GetType().FullName}");
                 }
             }
 
@@ -110,6 +120,7 @@ namespace Game
         /// <returns>是否发送心跳消息包成功。</returns>
         public bool SendHeartBeat()
         {
+            Debug.Log("发送心跳包");
             m_NetworkChannel.Send(ReferencePool.Acquire<CSHeartBeat>());
             return true;
         }
@@ -204,6 +215,7 @@ namespace Game
             return packet;
         }
 
+        //获取 服务器 to 客户端的包类型
         private Type GetServerToClientPacketType(int id)
         {
             Type type = null;
@@ -247,6 +259,7 @@ namespace Game
 
             Log.Info("Network channel '{0}' miss heart beat '{1}' times.", ne.NetworkChannel.Name, ne.MissCount.ToString());
 
+            //如果心跳包mis
             if (ne.MissCount < 2)
             {
                 return;
@@ -264,7 +277,7 @@ namespace Game
             }
 
             Log.Info("Network channel '{0}' error, error code is '{1}', error message is '{2}'.", ne.NetworkChannel.Name, ne.ErrorCode.ToString(), ne.ErrorMessage);
-
+            
             ne.NetworkChannel.Close();
         }
 

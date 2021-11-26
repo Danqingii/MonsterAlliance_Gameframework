@@ -27,7 +27,7 @@ namespace Game
             TcpNetwork = UnityGameFramework.Runtime.GameEntry.GetComponent<TcpNetworkComponent>();
             //Xlua = UnityGameFramework.Runtime.GameEntry.GetComponent<LuaComponent>();
 
-            TcpNetwork.StartConnect();
+            //TcpNetwork.StartConnect();
         }
     }
 }
