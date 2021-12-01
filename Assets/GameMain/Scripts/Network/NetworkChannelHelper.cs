@@ -23,11 +23,11 @@ namespace Game
     {
         //服务器To客户端的 包类型
         private readonly Dictionary<int, Type> m_ServerToClientPacketTypes = new Dictionary<int, Type>();
-        private readonly MemoryStream m_CachedStream = new MemoryStream(1024 * 8);
-        private INetworkChannel m_NetworkChannel = null;
+        private readonly MemoryStream m_CachedStream = new MemoryStream(1024 * 8);   //缓存流 主要是为了缓存信息
+        private INetworkChannel m_NetworkChannel = null;                             //具体的频道
 
         /// <summary>
-        /// 获取消息包头长度。
+        /// 获取消息包头长度 包头是固定的 从包头得到包体的解析 这里是4个字节。
         /// </summary>
         public int PacketHeaderLength
         {
@@ -38,7 +38,7 @@ namespace Game
         }
 
         /// <summary>
-        /// 初始化网络频道辅助器。
+        /// 初始化网络频道辅助器 也就是注册服务器包处理者 等待消息回调。
         /// </summary>
         /// <param name="networkChannel">网络频道。</param>
         public void Initialize(INetworkChannel networkChannel)
@@ -47,14 +47,13 @@ namespace Game
             
             m_NetworkChannel = networkChannel;
 
-            // 反射注册包和包处理函数。
+            //反射注册包和包处理函数。 也就是把服务器发给客户端的包全部都注册一下
             Type packetBaseType = typeof(SCPacketBase);               //服务器包-客户端包
             Type packetHandlerBaseType = typeof(PacketHandlerBase);   //包处理者
             Assembly assembly = Assembly.GetExecutingAssembly();
             Type[] types = assembly.GetTypes();
             for (int i = 0; i < types.Length; i++)
             {
-                //不是类的 || 是接口的 跳出
                 if (!types[i].IsClass || types[i].IsAbstract)
                 {
                     continue;
@@ -70,8 +69,7 @@ namespace Game
                         continue;
                     }
 
-                    //包服务器的包注册进去
-                    Log.Debug($"TODO(1) {packetBase.Id} {types[i].FullName}");
+                    //包服务器-客户端的消息包注册进去
                     m_ServerToClientPacketTypes.Add(packetBase.Id, types[i]);
                 }
                 else if (types[i].BaseType == packetHandlerBaseType)
@@ -79,8 +77,6 @@ namespace Game
                     //注册 包处理者
                     IPacketHandler packetHandler = (IPacketHandler)Activator.CreateInstance(types[i]);
                     m_NetworkChannel.RegisterHandler(packetHandler);
-                    
-                    Log.Debug($"TODO(2) {packetHandler.GetType().FullName}");
                 }
             }
 
@@ -120,7 +116,6 @@ namespace Game
         /// <returns>是否发送心跳消息包成功。</returns>
         public bool SendHeartBeat()
         {
-            Debug.Log("发送心跳包");
             m_NetworkChannel.Send(ReferencePool.Acquire<CSHeartBeat>());
             return true;
         }
@@ -147,16 +142,51 @@ namespace Game
                 return false;
             }
 
+            // 因为头部消息有8字节长度，所以先跳过8字节
+            m_CachedStream.SetLength(m_CachedStream.Capacity);
+            m_CachedStream.Position = 8;
+            Serializer.SerializeWithLengthPrefix(m_CachedStream, packet, PrefixStyle.Fixed32);
+            //序列化包 因为
+
+            // 头部消息
+            CSPacketHeader packetHeader = ReferencePool.Acquire<CSPacketHeader>();
+            packetHeader.Id = packet.Id;
+            packetHeader.PacketLength = (int)destination.Length - 8; // 消息内容长度需要减去头部消息长度
+
+            destination.Position = 0;
+            Serializer.SerializeWithLengthPrefix(m_CachedStream, packetHeader, PrefixStyle.Fixed32);
+            
+            UnityEngine.Debug.Log($"{packetHeader.Id}");
+            UnityEngine.Debug.Log($"{packetHeader.PacketLength}");
+            UnityEngine.Debug.Log($"{(packet as CSLogin).Account}");
+            UnityEngine.Debug.Log($"{(packet as CSLogin).Password}");
+            
+            /*
             m_CachedStream.SetLength(m_CachedStream.Capacity); // 此行防止 Array.Copy 的数据无法写入
             m_CachedStream.Position = 0L;
+            
+            //序列化包体
+            Serializer.SerializeWithLengthPrefix(m_CachedStream, packet, PrefixStyle.Fixed32);
 
             CSPacketHeader packetHeader = ReferencePool.Acquire<CSPacketHeader>();
+            packetHeader.Id = packet.Id;
+            packetHeader.PacketLength = m_CachedStream.GetBuffer().Length;
+            
+            UnityEngine.Debug.Log($"{packetHeader.Id}");
+            UnityEngine.Debug.Log($"{packetHeader.PacketLength}");
+            UnityEngine.Debug.Log($"{(packet as CSLogin).Account}");
+            UnityEngine.Debug.Log($"{(packet as CSLogin).Password}");
+            
             Serializer.Serialize(m_CachedStream, packetHeader);
+            
+            
             ReferencePool.Release(packetHeader);
-
-            Serializer.SerializeWithLengthPrefix(m_CachedStream, packet, PrefixStyle.Fixed32);
             ReferencePool.Release((IReference)packet);
+            */
+            
+            UnityEngine.Debug.Log($"发送包:{packet.GetType().FullName}");
 
+            //重中之中 把序列化的结果 又写入到了 目标流:destination
             m_CachedStream.WriteTo(destination);
             return true;
         }
@@ -169,8 +199,11 @@ namespace Game
         /// <returns>反序列化后的消息包头。</returns>
         public IPacketHeader DeserializePacketHeader(Stream source, out object customErrorData)
         {
+            // 反序列化包头是在解包的异步调用的！
             // 注意：此函数并不在主线程调用！
             customErrorData = null;
+            
+            //protobuf 的反序列化包头
             return (IPacketHeader)RuntimeTypeModel.Default.Deserialize(source, ReferencePool.Acquire<SCPacketHeader>(), typeof(SCPacketHeader));
         }
 
@@ -186,6 +219,7 @@ namespace Game
             // 注意：此函数并不在主线程调用！
             customErrorData = null;
 
+            //把具体的包头转换一下
             SCPacketHeader scPacketHeader = packetHeader as SCPacketHeader;
             if (scPacketHeader == null)
             {
@@ -193,9 +227,21 @@ namespace Game
                 return null;
             }
 
+            //从包头得到具体有用的信息
             Packet packet = null;
             if (scPacketHeader.IsValid)
             {
+                //这里可以做一系列的处理
+                
+                //数据包是否压缩
+                
+                //数据包是否丢失  crc32验证
+                
+                //数据包是否加密  各种验证 
+                
+                //TODO 经过了上面所有的操作 得到真正的数据包 然后解析
+                
+                //如果不存在 注册过的 服务器-客户端包  爆警告
                 Type packetType = GetServerToClientPacketType(scPacketHeader.Id);
                 if (packetType != null)
                 {
@@ -215,7 +261,6 @@ namespace Game
             return packet;
         }
 
-        //获取 服务器 to 客户端的包类型
         private Type GetServerToClientPacketType(int id)
         {
             Type type = null;
@@ -226,6 +271,8 @@ namespace Game
 
             return null;
         }
+
+        #region 事件回调
 
         private void OnNetworkConnected(object sender, GameEventArgs e)
         {
@@ -289,5 +336,7 @@ namespace Game
                 return;
             }
         }
+
+        #endregion
     }
 }

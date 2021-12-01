@@ -39,8 +39,7 @@ namespace GameFramework.Network
             protected bool m_Active;                                         //是否行动的
             private bool m_Disposed;                                         //是否销毁的
 
-            
-            //这5个回调都是为了 外部执行一些信息
+            //这5个回调都是为了 外部执行一些信息输出 保证逻辑通顺
             /// <summary>网络频道连接</summary>
             public GameFrameworkAction<NetworkChannelBase, object> NetworkChannelConnected;
             
@@ -261,7 +260,7 @@ namespace GameFramework.Network
                     return;
                 }
 
-                //接收消息包池  为啥也要Update!!!  不是已经在EventManager模块里面轮询了吗
+                //消息池  分发消息
                 m_ReceivePacketPool.Update(elapseSeconds, realElapseSeconds);
 
                 //m_HeartBeatInterval = 30 > 0  等待发送心跳包
@@ -322,6 +321,7 @@ namespace GameFramework.Network
                     throw new GameFrameworkException("Packet handler is invalid.");
                 }
 
+                //真正的注册回调 也就是事件回调
                 m_ReceivePacketPool.Subscribe(handler.Id, handler.Handle);
             }
 
@@ -516,7 +516,7 @@ namespace GameFramework.Network
             //发送过程  一直在Update里面发送
             protected virtual bool ProcessSend()
             {
-                //流的长度 >0 才代表不会空数据        发送包的池 小于0 也是false
+                //如果发送流的长度 > 0                  发送包的池 小于0
                 if (m_SendState.Stream.Length > 0 || m_SendPacketPool.Count <= 0)
                 {
                     return false;
@@ -534,7 +534,7 @@ namespace GameFramework.Network
                     bool serializeResult = false;
                     try
                     {
-                        //序列化消息
+                        //序列化包  实现了频道辅助器接口的 实现的序列化  把数据写到了目标流 SendState流
                         serializeResult = m_NetworkChannelHelper.Serialize(packet, m_SendState.Stream);
                     }
                     catch (Exception exception)
@@ -550,6 +550,7 @@ namespace GameFramework.Network
                         throw;
                     }
 
+                    //序列化失败就结束了
                     if (!serializeResult)
                     {
                         string errorMessage = "Serialized packet failure.";
@@ -563,6 +564,7 @@ namespace GameFramework.Network
                     }
                 }
 
+                //序列化结束了 把发送流归零
                 m_SendState.Stream.Position = 0L;
                 return true;
             }
@@ -572,12 +574,15 @@ namespace GameFramework.Network
             {
             }
 
-            //步骤消息包头
+            //解包头过程
             protected virtual bool ProcessPacketHeader() 
             {
                 try
                 {
+                    //自定义错误信息
                     object customErrorData = null;
+                    
+                    //反序列化包头
                     IPacketHeader packetHeader = m_NetworkChannelHelper.DeserializePacketHeader(m_ReceiveState.Stream, out customErrorData);
 
                     if (customErrorData != null && NetworkChannelCustomError != null)
@@ -625,7 +630,7 @@ namespace GameFramework.Network
                 return true;
             }
 
-            //步骤包 
+            //解包过程 
             protected virtual bool ProcessPacket()
             {
                 lock (m_HeartBeatState)
@@ -636,8 +641,9 @@ namespace GameFramework.Network
 
                 try
                 {
-                    //真正的包
                     object customErrorData = null;
+                    
+                    //得到真正的 反序列化包 
                     Packet packet = m_NetworkChannelHelper.DeserializePacket(m_ReceiveState.PacketHeader, m_ReceiveState.Stream, out customErrorData);
 
                     if (customErrorData != null && NetworkChannelCustomError != null)
@@ -648,6 +654,7 @@ namespace GameFramework.Network
                     //开始分发 具体的包
                     if (packet != null)
                     {
+                        //这里就是最关键的一步了  怎么分发消息
                         m_ReceivePacketPool.Fire(this, packet);
                     }
 

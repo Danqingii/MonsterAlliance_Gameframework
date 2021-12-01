@@ -3,7 +3,9 @@ using UnityGameFramework.Runtime;
 
 namespace Game
 {
-    //sc 处理结束之后 开始继续 操作
+    /// <summary>
+    /// 服务器-客户端 心跳包 处理者
+    /// </summary>
     public class SCHeartBeatHandler : PacketHandlerBase
     {
         public override int Id

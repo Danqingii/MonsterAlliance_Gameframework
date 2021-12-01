@@ -9,7 +9,7 @@ namespace Game
     {
         private LuaManager m_LuaManager;
         
-        private Action m_Initialize;
+        private Action m_Start;
         private Action m_Update;
         private Action m_FixedUpdate;
         private Action m_Destroy;
@@ -25,13 +25,13 @@ namespace Game
 
             m_LuaManager.DoString("require 'Launcher'");
 
-            m_Initialize = m_LuaManager.BindToLua<Action>("Initialize");
+            m_Start = m_LuaManager.BindToLua<Action>("Start");
             m_Update = m_LuaManager.BindToLua<Action>("Update");
             m_FixedUpdate = m_LuaManager.BindToLua<Action>("FixedUpdate");
             m_Destroy = m_LuaManager.BindToLua<Action>("OnDestroy");
             m_ReceiveMsg = m_LuaManager.BindToLua<Action<List<byte[]>>>("OnReceiveMsg");
 
-            m_Initialize?.Invoke();
+            m_Start?.Invoke();
         }
 
         public void OnReceiveMsg(ref List<byte[]> msg)
@@ -62,7 +62,7 @@ namespace Game
         {
             m_Destroy?.Invoke();
 
-            m_Initialize = null;
+            m_Start = null;
             m_Update = null;
             m_FixedUpdate = null;
             m_Destroy = null;

@@ -78,6 +78,7 @@ namespace GameFramework.Network
 
             protected override bool ProcessSend()
             {
+                //真正的发送消息  经过了base.ProcessSend() 处理 已经得到了序列化的流 也保证了流的信息
                 if (base.ProcessSend())
                 {
                     SendAsync();
@@ -167,7 +168,19 @@ namespace GameFramework.Network
             {
                 try
                 {
-                    m_Socket.BeginSend(m_SendState.Stream.GetBuffer(), (int)m_SendState.Stream.Position, (int)(m_SendState.Stream.Length - m_SendState.Stream.Position), SocketFlags.None, m_SendCallback, m_Socket);
+                    //开始发送流信息
+                    //具体发送的信息流
+                    //从当前位置发送
+                    //要发送的字节
+                    //不对此调用使用任何标志
+                    //发送回调
+                    //自定义消息
+                    m_Socket.BeginSend(m_SendState.Stream.GetBuffer(),
+                        (int)m_SendState.Stream.Position, 
+                        (int)(m_SendState.Stream.Length - m_SendState.Stream.Position), 
+                        SocketFlags.None, 
+                        m_SendCallback,
+                        m_Socket);
                 }
                 catch (Exception exception)
                 {
@@ -191,6 +204,7 @@ namespace GameFramework.Network
                     return;
                 }
 
+                //发送成功会返回 发送的字节数
                 int bytesSent = 0;
                 try
                 {
@@ -209,6 +223,7 @@ namespace GameFramework.Network
                     throw;
                 }
 
+                //这里是处理 如果这一条消息太长了  就继续发送
                 m_SendState.Stream.Position += bytesSent;
                 if (m_SendState.Stream.Position < m_SendState.Stream.Length)
                 {
@@ -216,8 +231,11 @@ namespace GameFramework.Network
                     return;
                 }
 
+                //发送完毕了 重置发送流
                 m_SentPacketCount++;
                 m_SendState.Reset();
+                
+                //到这里就是一整个 Tcp发送流程了 基本是非常的完整了
             }
 
             //接受消息回调
@@ -225,13 +243,12 @@ namespace GameFramework.Network
             {
                 try
                 {
-                    //开始接受消息    
-                    //m_ReceiveState.Stream.GetBuffer() =  创建该流所用的字节数组 也就是接受消息缓存区
-                    //(int)m_ReceiveState.Stream.Position = 在其中存储接收到的数据的参数
-                    //(int)(m_ReceiveState.Stream.Length - m_ReceiveState.Stream.Position) = 具体要接收的字节数
-                    //SocketFlags.None = 不对此调用使用任何标志
-                    //m_ReceiveCallback = ReceiveCallback  也就是接受消息的回调
-                    //m_Socket = 用户定义的对象
+                    //接收流 也就是接受消息缓存区
+                    //buffer数组中也就是消息缓存区接收数据的位置
+                    //具体要接收的字节数
+                    //不对此调用使用任何标志
+                    //接受消息的回调
+                    //用户定义的对象
                     m_Socket.BeginReceive(
                         m_ReceiveState.Stream.GetBuffer(),
                         (int)m_ReceiveState.Stream.Position, 
@@ -282,7 +299,7 @@ namespace GameFramework.Network
                     throw;
                 }
 
-                //空包 关闭自己的连接
+                //因为 socket.EndReceive 会返回一个接收成功的数量 接收失败了就可以直接关闭连接了
                 if (bytesReceived <= 0)
                 {
                     Close();
@@ -299,22 +316,24 @@ namespace GameFramework.Network
                     return;
                 }
 
-                //------- 执行到了这里  包接收完了
+                //------- 执行到了这里  一个完整的包接收完了
+                //重置 接受流的位置
 
                 m_ReceiveState.Stream.Position = 0L;
 
+                //过程是否成功
                 bool processSuccess = false;
                 
                 //包头并不是空的
                 if (m_ReceiveState.PacketHeader != null) 
                 {
-                    //执行步骤包
+                    //执行解包过程 也就是解包
                     processSuccess = ProcessPacket();
                     m_ReceivedPacketCount++;
                 }
                 else
                 {
-                    //步骤消息包头
+                    //执行步骤包头 也就是解包头
                     processSuccess = ProcessPacketHeader();
                 }
 

@@ -21,7 +21,7 @@ namespace GameFramework
         private readonly Dictionary<object, LinkedListNode<EventHandler<T>>> m_CachedNodes;    //缓存节点
         private readonly Dictionary<object, LinkedListNode<EventHandler<T>>> m_TempNodes;      //临时节点
         private readonly EventPoolMode m_EventPoolMode;
-        private EventHandler<T> m_DefaultHandler;
+        private EventHandler<T> m_DefaultHandler;        //默认处理节点 如果在普通节点丢失的情况下 才会执行
 
         /// <summary>
         /// 初始化事件池的新实例。
@@ -260,6 +260,8 @@ namespace GameFramework
                 {
                     //保存缓存节点
                     m_CachedNodes[e] = current.Next != range.Terminal ? current.Next : null;
+                    
+                    //执行节点
                     current.Value.Invoke(sender, e);
                     current = m_CachedNodes[e];
                 }

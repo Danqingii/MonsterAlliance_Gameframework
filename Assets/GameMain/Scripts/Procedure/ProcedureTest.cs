@@ -17,14 +17,14 @@ namespace Game
         }
 
         private NetworkChannelHelper helper;
+        private INetworkChannel channel;
 
         protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
         {
             base.OnEnter(procedureOwner);
 
             helper = new NetworkChannelHelper();
-
-            INetworkChannel channel = GameEntry.Network.CreateNetworkChannel("Test", ServiceType.Tcp, helper);
+            channel = GameEntry.Network.CreateNetworkChannel("Test", ServiceType.Tcp, helper);
             channel.Connect(IPAddress.Parse("127.0.0.1"),17779);
         }
 
@@ -34,7 +34,7 @@ namespace Game
 
             if (Input.GetKeyDown(KeyCode.A))
             {
-                helper.SendHeartBeat();
+                channel.Send(new CSLogin(){Account = "1", Password = "2"});
             }
         }
     }

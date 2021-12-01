@@ -956,6 +956,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 716213483}
     m_Modifications:
+    - target: {fileID: 3112374761521574863, guid: cab60976bf3ad3a458b5b794491d44d2,
+        type: 3}
+      propertyPath: m_SettingHelperTypeName
+      value: UnityGameFramework.Runtime.PlayerPrefsSettingHelper
+      objectReference: {fileID: 0}
+    - target: {fileID: 3112374761758436543, guid: cab60976bf3ad3a458b5b794491d44d2,
+        type: 3}
+      propertyPath: m_ResourceMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3112374761758436543, guid: cab60976bf3ad3a458b5b794491d44d2,
+        type: 3}
+      propertyPath: m_ReadWritePathType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3112374761771364027, guid: cab60976bf3ad3a458b5b794491d44d2,
         type: 3}
       propertyPath: m_EntranceProcedureTypeName

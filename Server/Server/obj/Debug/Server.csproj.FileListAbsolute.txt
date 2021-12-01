@@ -1,0 +1,11 @@
+D:\Study\MonsterAlliance_Gameframework\Server\Server\obj\Debug\Server.csproj.SuggestedBindingRedirects.cache
+D:\Study\MonsterAlliance_Gameframework\Server\Server\obj\Debug\Server.csproj.CoreCompileInputs.cache
+D:\Study\MonsterAlliance_Gameframework\Server\Server\bin\Debug\Server.exe.config
+D:\Study\MonsterAlliance_Gameframework\Server\Server\bin\Debug\Server.exe
+D:\Study\MonsterAlliance_Gameframework\Server\Server\bin\Debug\Server.pdb
+D:\Study\MonsterAlliance_Gameframework\Server\Server\bin\Debug\ICSharpCode.SharpZipLib.dll
+D:\Study\MonsterAlliance_Gameframework\Server\Server\bin\Debug\protobuf-net.dll
+D:\Study\MonsterAlliance_Gameframework\Server\Server\obj\Debug\Server.csproj.CopyComplete
+D:\Study\MonsterAlliance_Gameframework\Server\Server\obj\Debug\Server.exe
+D:\Study\MonsterAlliance_Gameframework\Server\Server\obj\Debug\Server.pdb
+D:\Study\MonsterAlliance_Gameframework\Server\Server\obj\Debug\Server.csproj.AssemblyReference.cache
