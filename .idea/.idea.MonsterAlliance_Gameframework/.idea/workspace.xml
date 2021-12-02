@@ -5,159 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="053ab00c-8745-434b-941f-d5b85d300ee8" name="默认变更列表" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketHandler/SCLoginHandler.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketHandler/SCLoginHandler.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/CommonPacket.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/CommonPacket/CSLogin.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/CommonPacket/CSLogin.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/CommonPacket/SCLogin.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/CommonPacket/SCLogin.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/Header.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/HeartBeatPacket.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/PacketCoding.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/PacketCoding.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/XLua.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/XLua/Gen.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/.vs/Server/project-colors.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/.vs/Server/v17/.suo" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server.sln" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/App.config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/ClientSocket.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/EventDispatcher.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Network/BaseEventArgs.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Network/Packet.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Network/PacketBase.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Network/PacketCoding.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Network/PacketHandler/PacketHandlerBase.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Network/PacketHandler/SCHeartBeatHandler.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Network/PacketStructure/CSPacketBase.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Network/PacketStructure/CommonPacket/CSLogin.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Network/PacketStructure/CommonPacket/SCLogin.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Network/PacketStructure/Header/CSPacketHeader.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Network/PacketStructure/Header/PacketHeaderBase.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Network/PacketStructure/Header/SCPacketHeader.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Network/PacketStructure/HeartBeatPacket/CSHeartBeat.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Network/PacketStructure/HeartBeatPacket/SCHeartBeat.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Network/PacketStructure/SCPacketBase.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Network/PacketType.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Program.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Properties/AssemblyInfo.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Proto/CS_LoginProto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Proto/IProto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Proto/ProtoCodeDef.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Proto/SC_LoginProto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Proto/TestProto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Role.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/RoleManager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/ServerManager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Utility/CompressionHelper.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Utility/Crc16.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Utility/CustomMemoryStream.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Utility/Log.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Utility/SecurityUtil.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/Utility/Utility.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/bin/Debug/ICSharpCode.SharpZipLib.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/bin/Debug/NewServer.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/bin/Debug/NewServer.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/bin/Debug/protobuf-net.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/obj/Debug/NewServer.csproj.AssemblyReference.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/obj/Debug/NewServer.csproj.CopyComplete" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/obj/Debug/NewServer.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/obj/Debug/NewServer.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/obj/Debug/NewServer.csprojAssemblyReference.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/obj/Debug/NewServer.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/NewServer/obj/Debug/NewServer.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/Server.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/bin/Debug/ICSharpCode.SharpZipLib.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/bin/Debug/Server.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/bin/Debug/Server.exe.config" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/bin/Debug/Server.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/bin/Debug/protobuf-net.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/obj/Debug/.NETFramework,Version=v4.7.2.AssemblyAttributes.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/obj/Debug/Server.csproj.AssemblyReference.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/obj/Debug/Server.csproj.CopyComplete" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/obj/Debug/Server.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/obj/Debug/Server.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/obj/Debug/Server.csproj.SuggestedBindingRedirects.cache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/obj/Debug/Server.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/Server/obj/Debug/Server.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.MonsterAlliance_Gameframework/.idea/contentModel.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.MonsterAlliance_Gameframework/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MonsterAlliance_Gameframework/.idea/indexLayout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.MonsterAlliance_Gameframework/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.MonsterAlliance_Gameframework/.idea/riderModule.iml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/TestServer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/TestServer.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.MonsterAlliance_Gameframework/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.MonsterAlliance_Gameframework/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assembly-CSharp-Editor.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp-Editor.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assembly-CSharp-firstpass.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp-firstpass.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assembly-CSharp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameFramework/Libraries/GameFramework/Base/Event/EventPool.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameFramework/Libraries/GameFramework/Base/Event/EventPool.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameFramework/Libraries/GameFramework/Network/NetworkManager.NetworkChannelBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameFramework/Libraries/GameFramework/Network/NetworkManager.NetworkChannelBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameFramework/Libraries/GameFramework/Network/NetworkManager.TcpNetworkChannel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameFramework/Libraries/GameFramework/Network/NetworkManager.TcpNetworkChannel.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scenes/Launcher.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scenes/Launcher.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/CSPacketBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/CSPacketBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/CSPacketBase.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/CSPacketBase.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/CSPacketHeader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/Header/CSPacketHeader.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/CSPacketHeader.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/Header/CSPacketHeader.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/NetworkChannelHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/NetworkChannelHelper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/Packet.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/Packet/CSHeartBeat.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/HeartBeatPacket/CSHeartBeat.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/Packet/CSHeartBeat.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/HeartBeatPacket/CSHeartBeat.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/Packet/SCHeartBeat.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/HeartBeatPacket/SCHeartBeat.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/Packet/SCHeartBeat.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/HeartBeatPacket/SCHeartBeat.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketHandler/SCHeartBeatHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketHandler/SCHeartBeatHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketHandlerBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketHandler/PacketHandlerBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketHandlerBase.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketHandler/PacketHandlerBase.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketHeaderBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/Header/PacketHeaderBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketHeaderBase.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/Header/PacketHeaderBase.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/SCPacketBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/SCPacketBase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/SCPacketBase.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/SCPacketBase.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/SCPacketHeader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/Header/SCPacketHeader.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/SCPacketHeader.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/Header/SCPacketHeader.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Procedure/ProcedureTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Procedure/ProcedureTest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/XLua/CSharp/LuaComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/XLua/CSharp/LuaComponent.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/XLua/Lua/Launcher.lua" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/XLua/Lua/Launcher.lua" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameFramework.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/GameFramework.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/.vs/NewServer/project-colors.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/.vs/NewServer/v16/.suo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/.vs/NewServer/v17/.suo" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer.sln" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/ClientSocket.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/Common/CompressionHelper.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/Common/Crc16.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/Common/CustomMemoryStream.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/Common/SecurityUtil.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/DBModel/LoginDBModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/EventDispatcher.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/Log.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/NewServer.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/Program.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/Properties/AssemblyInfo.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/Proto/CS_LoginProto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/Proto/IProto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/Proto/ProtoCodeDef.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/Proto/SC_LoginProto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/Proto/TestProto.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/Role.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/RoleManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/ServerManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/bin/Debug/ICSharpCode.SharpZipLib.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/bin/Debug/NewServer.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/bin/Debug/NewServer.pdb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/obj/Debug/NewServer.csproj.AssemblyReference.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/obj/Debug/NewServer.csproj.CopyComplete" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/obj/Debug/NewServer.csproj.CoreCompileInputs.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/obj/Debug/NewServer.csproj.FileListAbsolute.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/obj/Debug/NewServer.csprojAssemblyReference.cache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/obj/Debug/NewServer.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/NewServer/NewServer/obj/Debug/NewServer.pdb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnityGameFramework.Editor.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/UnityGameFramework.Editor.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UnityGameFramework.Runtime.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/UnityGameFramework.Runtime.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/.NETFramework,Version=v4.7.1.AssemblyAttributes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/.NETFramework,Version=v4.7.1.AssemblyAttributes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/Header/CSPacketHeader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/Header/CSPacketHeader.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/Header/PacketHeaderBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/Header/PacketHeaderBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/Header/SCPacketHeader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/Network/PacketStructure/Header/SCPacketHeader.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/GameMain/Scripts/TcpNetwork/TcpNetworkComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/GameMain/Scripts/TcpNetwork/TcpNetworkComponent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/.vs/Server/project-colors.json" beforeDir="false" afterPath="$PROJECT_DIR$/Server/.vs/Server/project-colors.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/.vs/Server/v17/.suo" beforeDir="false" afterPath="$PROJECT_DIR$/Server/.vs/Server/v17/.suo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/Server/NewServer/ClientSocket.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server/NewServer/ClientSocket.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/Server/NewServer/Network/PacketStructure/Header/CSPacketHeader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server/NewServer/Network/PacketStructure/Header/CSPacketHeader.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/Server/NewServer/Network/PacketStructure/Header/PacketHeaderBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server/NewServer/Network/PacketStructure/Header/PacketHeaderBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/Server/NewServer/Network/PacketStructure/Header/SCPacketHeader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server/NewServer/Network/PacketStructure/Header/SCPacketHeader.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/Server/bin/Debug/Server.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server/bin/Debug/Server.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/Server/bin/Debug/Server.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server/bin/Debug/Server.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/Server/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/Server/obj/Debug/Server.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server/obj/Debug/Server.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/Server/obj/Debug/Server.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server/obj/Debug/Server.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/Server/obj/Debug/Server.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Server/Server/obj/Debug/Server.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/GameFramework.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/GameFramework.csproj.AssemblyReference.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/UnityGameFramework.Editor.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UnityGameFramework.Editor.csproj.AssemblyReference.cache" afterDir="false" />
     </list>
@@ -190,13 +60,27 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6b1444477c1d41c692ef6c02a838308529ac30/50/c7458b41/Type.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../GF/StarForce/Assets/GameMain/Scripts/Network/NetworkChannelHelper.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/aa4a079a263b4de1bdf2f4649b3f1f6384e00/2/StreamExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8c1963fe95f34218bb2d21bb9323c90e168a30/86/07a081a4/Queue`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://E:/悠游实战/实战/实战2021-6-7/工程资源/Client/Assets/YouYouFramework/Managers/Socket/SocketManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://E:/悠游实战/实战/实战2021-6-7/工程资源/Client/Assets/YouYouFramework/Managers/Socket/IProto.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f98083cbc97e4fa0a4ef2f523feff5e113bc00/86/6e391c6c/RangeAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/obj/Debug/.NETFramework,Version=v4.7.1.AssemblyAttributes.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@3.0.6/Scripts/Runtime/TMP_InputField.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6b1444477c1d41c692ef6c02a838308529ac30/56/9308d466/MemoryStream.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f98083cbc97e4fa0a4ef2f523feff5e113bc00/8d/75f68702/PropertyAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/31a75a0f46534b1c9f3fa1332f12dd7d27a00/b0/998cb2f2/TypeModel.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Socekt/Unity3D-Protobuf-Socket/Assets/TestScripts/SimulateServer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/31a75a0f46534b1c9f3fa1332f12dd7d27a00/bb/973175ba/RuntimeTypeModel.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/GameMain/Scripts/Test.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6b1444477c1d41c692ef6c02a838308529ac30/70/1f50778e/Assembly.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/31a75a0f46534b1c9f3fa1332f12dd7d27a00/9f/e3ff6a19/PrefixStyle.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://E:/悠游实战/实战/实战2021-6-7/工程资源/Client/Assets/YouYouFramework/Managers/Socket/SocketTcpRoutine.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../YouYouStudy/Assets/YouYouFormework/Scripts/Managers/Socket/SocketTcpRoutine.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../YouYouStudy/Assets/YouYouFormework/Scripts/Managers/Socket/SocketManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../YouYouStudy/Assets/YouYouFormework/Scripts/Utility/CustomMemoryStream.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6b1444477c1d41c692ef6c02a838308529ac30/56/9308d466/MemoryStream.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/GameMain/Scripts/TestServer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/31a75a0f46534b1c9f3fa1332f12dd7d27a00/15/02c95259/ProtoMemberAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/GameMain/Scripts/TcpNetwork/TcpNetworkComponent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8c1963fe95f34218bb2d21bb9323c90e168a30/66/24d90ef3/SocketFlags.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/GameMain/Scripts/Proto/ProtoCodeDef.cs" root0="FORCE_HIGHLIGHTING" />
@@ -356,7 +240,8 @@
       <workItem from="1638239991080" duration="2931000" />
       <workItem from="1638251200834" duration="5967000" />
       <workItem from="1638323971882" duration="1223000" />
-      <workItem from="1638330477472" duration="18447000" />
+      <workItem from="1638330477472" duration="18501000" />
+      <workItem from="1638409191535" duration="22183000" />
     </task>
     <task id="LOCAL-00001" summary="加入本地MongoDB 有Bug 还未修正">
       <created>1634811951749</created>
@@ -428,7 +313,14 @@
       <option name="project" value="LOCAL" />
       <updated>1637922742205</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="提交服务器">
+      <created>1638355485610</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1638355485610</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -462,7 +354,8 @@
     <MESSAGE value="Network 注释" />
     <MESSAGE value="修改TcpComponent" />
     <MESSAGE value="看network 加入的注释" />
-    <option name="LAST_COMMIT_MESSAGE" value="看network 加入的注释" />
+    <MESSAGE value="提交服务器" />
+    <option name="LAST_COMMIT_MESSAGE" value="提交服务器" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

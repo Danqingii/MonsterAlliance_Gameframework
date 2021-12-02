@@ -10,13 +10,27 @@ public abstract class PacketHeaderBase
         get;
     }
 
-    public virtual int Id
+    public abstract int Id
     {
         get;
         set;
     }
 
-    public virtual int PacketLength
+    public abstract int PacketLength
+    {
+        get;
+        set;
+    }
+
+    public bool IsCompress
+    {
+        get
+        {
+            return PacketLength > 1024;
+        }
+    }
+
+    public abstract uint Crc32
     {
         get;
         set;

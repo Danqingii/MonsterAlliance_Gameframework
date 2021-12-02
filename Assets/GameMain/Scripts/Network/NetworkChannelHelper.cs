@@ -14,8 +14,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using UnityEngine;
 using UnityGameFramework.Runtime;
+using Object = UnityEngine.Object;
 
 namespace Game
 {
@@ -27,13 +27,14 @@ namespace Game
         private INetworkChannel m_NetworkChannel = null;                             //具体的频道
 
         /// <summary>
-        /// 获取消息包头长度 包头是固定的 从包头得到包体的解析 这里是4个字节。
+        /// 获取消息包头长度 包头是固定的 从包头得到包体的解析 这里是12个字节 + 1个是否为压缩包字节。
         /// </summary>
         public int PacketHeaderLength
         {
             get
             {
-                return sizeof(int);
+                //有3个int信息需要传递 + 一个bool消息传递 = 9个字节
+                return sizeof(int) * 3;
             }
         }
 
@@ -141,53 +142,70 @@ namespace Game
                 Log.Warning("Send packet invalid.");
                 return false;
             }
-
-            // 因为头部消息有8字节长度，所以先跳过8字节
+            
+            /*
+            // 此行防止 Array.Copy 的数据无法写入
             m_CachedStream.SetLength(m_CachedStream.Capacity);
-            m_CachedStream.Position = 8;
+
+            //跳过包头的位置 前面的位置留给包头
+            m_CachedStream.Position = PacketHeaderLength;
+            
+            //序列化包体
+            Serializer.SerializeWithLengthPrefix(m_CachedStream, packet, PrefixStyle.Fixed32);
+            UnityEngine.Debug.Log($"{(packet as CSLogin).Account} {(packet as CSLogin).Password}");
+            byte[] buffer = m_CachedStream.ToArray();
+
+            MemoryStream strame = new MemoryStream(buffer.Length);
+            strame.Write(buffer,0,buffer.Length);
+            CSLogin csLogin = Serializer.DeserializeWithLengthPrefix<CSLogin>(m_CachedStream,PrefixStyle.Fixed32);
+            UnityEngine.Debug.Log($"{csLogin.Account} {csLogin.Password}");
+            
+            
+            //头部消息
+            CSPacketHeader packetHeader = ReferencePool.Acquire<CSPacketHeader>();
+            packetHeader.Id = packet.Id;
+            packetHeader.Crc32 = 33333;
+            packetHeader.PacketLength = (int)m_CachedStream.Length - PacketHeaderLength;
+            
+            //序列化包头
+            m_CachedStream.Position = 0L;
+            Serializer.Serialize(m_CachedStream, packetHeader);
+            
+            ReferencePool.Release((IReference)packet);
+            ReferencePool.Release(packetHeader);
+
+            //把序列化的结果 写入到了 目标流:destination
+            m_CachedStream.WriteTo(destination);
+            
+            
+            /* 以下内容为木头本人做的改动,不知道是否有错误的地方(虽然它运行起来是正确的),希望大家能帮忙指正 */
+            // 因为头部消息有12字节长度，所以先跳过12字节
+            m_CachedStream.Position = PacketHeaderLength;
             Serializer.SerializeWithLengthPrefix(m_CachedStream, packet, PrefixStyle.Fixed32);
             //序列化包 因为
 
             // 头部消息
             CSPacketHeader packetHeader = ReferencePool.Acquire<CSPacketHeader>();
             packetHeader.Id = packet.Id;
-            packetHeader.PacketLength = (int)destination.Length - 8; // 消息内容长度需要减去头部消息长度
+            packetHeader.PacketLength = (int)m_CachedStream.Length - PacketHeaderLength; // 消息内容长度需要减去头部消息长度
 
-            destination.Position = 0;
+            m_CachedStream.Position = 0;
             Serializer.SerializeWithLengthPrefix(m_CachedStream, packetHeader, PrefixStyle.Fixed32);
-            
-            UnityEngine.Debug.Log($"{packetHeader.Id}");
-            UnityEngine.Debug.Log($"{packetHeader.PacketLength}");
-            UnityEngine.Debug.Log($"{(packet as CSLogin).Account}");
-            UnityEngine.Debug.Log($"{(packet as CSLogin).Password}");
-            
-            /*
-            m_CachedStream.SetLength(m_CachedStream.Capacity); // 此行防止 Array.Copy 的数据无法写入
-            m_CachedStream.Position = 0L;
-            
-            //序列化包体
-            Serializer.SerializeWithLengthPrefix(m_CachedStream, packet, PrefixStyle.Fixed32);
 
-            CSPacketHeader packetHeader = ReferencePool.Acquire<CSPacketHeader>();
-            packetHeader.Id = packet.Id;
-            packetHeader.PacketLength = m_CachedStream.GetBuffer().Length;
-            
-            UnityEngine.Debug.Log($"{packetHeader.Id}");
-            UnityEngine.Debug.Log($"{packetHeader.PacketLength}");
-            UnityEngine.Debug.Log($"{(packet as CSLogin).Account}");
-            UnityEngine.Debug.Log($"{(packet as CSLogin).Password}");
-            
-            Serializer.Serialize(m_CachedStream, packetHeader);
-            
-            
-            ReferencePool.Release(packetHeader);
             ReferencePool.Release((IReference)packet);
-            */
-            
-            UnityEngine.Debug.Log($"发送包:{packet.GetType().FullName}");
-
-            //重中之中 把序列化的结果 又写入到了 目标流:destination
+            ReferencePool.Release(packetHeader);
             m_CachedStream.WriteTo(destination);
+            
+            /*byte[] idBytes = BitConverter.GetBytes(packetHeader.Id);
+            m_CachedStream.Write(idBytes,0,idBytes.Length);
+            
+            byte[] packLenBytes = BitConverter.GetBytes(packetHeader.PacketLength);
+            m_CachedStream.Write(packLenBytes,0,packLenBytes.Length);
+            
+            byte[] crc32Bytes = BitConverter.GetBytes(packetHeader.Crc32);
+            m_CachedStream.Write(crc32Bytes,0,crc32Bytes.Length);
+
+            //m_CachedStream.WriteByte((byte) (packetHeader.IsCompress == true ? 1 : 0));*/
             return true;
         }
 
@@ -231,7 +249,7 @@ namespace Game
             Packet packet = null;
             if (scPacketHeader.IsValid)
             {
-                //这里可以做一系列的处理
+                //这里可以做一系列的处理TODO
                 
                 //数据包是否压缩
                 

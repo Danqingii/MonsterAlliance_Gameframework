@@ -213,7 +213,7 @@ namespace Game
                 ms.WriteUShort((ushort)(data.Length + 3));       //包体的长度
                 ms.WriteBool(isCompress);                        //是否压缩
                 ms.WriteUShort(crc16);                           //crc16验证码
-                ms.Write(data,0,data.Length);        //具体的数据包写入
+                ms.Write(data,0,data.Length);                    //具体的数据包写入
                 buffer = ms.ToArray();                          
             }
 

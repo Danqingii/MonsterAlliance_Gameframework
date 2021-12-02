@@ -1,5 +1,6 @@
 using  System;
 using ProtoBuf;
+using UnityEngine;
 
 namespace Game
 {
@@ -28,6 +29,13 @@ namespace Game
         public override int PacketLength
         {
             get;
+            set;
+        }
+
+        [ProtoMember(3)]
+        public override uint Crc32
+        {
+            get; 
             set;
         }
     }

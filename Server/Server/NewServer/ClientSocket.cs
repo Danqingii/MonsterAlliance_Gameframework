@@ -54,147 +54,73 @@ public class ClientSocket
 
     private void Receive(IAsyncResult ar)
     {
-        Socket socketServer = ar as Socket;
-
-        while (true)
+        Socket socket = (Socket)ar.AsyncState;
+        return;
+        try
         {
-            //创建一个内存缓冲区，其大小为1024*1024字节  即1M     
-            byte[] arrServerRecMsg = new byte[1024 * 1024];
-            //将接收到的信息存入到内存缓冲区，并返回其字节数组的长度    
-            try
+            int bytesReceived = socket.EndReceive(ar);
+
+            if (bytesReceived > 0)
             {
-                int length = socketServer.Receive(arrServerRecMsg);
+                //把接收到的数据 写入缓冲数据流的尾部
+                m_ReceiveState.Position = m_ReceiveState.Length;
 
-                // 这里只是演示用，实际中可以根据头部消息判断是什么类型的消息，然后再反序列化
-                MemoryStream clientStream = new MemoryStream(arrServerRecMsg);
-                CSPacketHeader header = Serializer.DeserializeWithLengthPrefix<CSPacketHeader>(clientStream, PrefixStyle.Fixed32);
+                m_ReceiveState.Write(m_ReceiveBuffer, 0, bytesReceived);
 
-                if(header != null)
+                //如果缓存数据流的长度大于12  至少有一个不完整的包过来了
+
+                if (m_ReceiveState.Length > 12)
                 {
-                    CSLogin packet = new CSLogin();
-                    packet = (CSLogin)RuntimeTypeModel.Default.DeserializeWithLengthPrefix(clientStream, packet, typeof(CSLogin), PrefixStyle.Fixed32, 0);
+                    while (true)
+                    {
+                        m_ReceiveState.Position = 0;
 
-                    if(packet != null)
-                    {
-                        //这个是正常解析
-                        Log.Debug($"包体:{packet.Account}  {packet.Password}");
-                    }
-                    else
-                    {
-                        Log.Debug($"包体解析失败");
+                        CSLogin packet = (CSLogin)RuntimeTypeModel.Default.DeserializeWithLengthPrefix(m_ReceiveState, new CSLogin(), typeof(CSLogin), PrefixStyle.Fixed32, 0);
+
+                        if (packet != null)
+                        {
+                            //这个是正常解析
+                            Log.Debug($"包体:{packet.Account}  {packet.Password}");
+                        }
+                        else
+                        {
+                            Log.Debug($"包体解析失败");
+                        }
+
+                        CSPacketHeader header = (CSPacketHeader)RuntimeTypeModel.Default.Deserialize(m_ReceiveState, new CSPacketHeader(), typeof(CSPacketHeader));
+                       
                     }
                 }
-                else
-                {
-                    Log.Debug($"包头解析失败");
-                }
-
-                //解包
-               
-           
             }
-            catch (Exception ex)
+            else
             {
-                //提示套接字监听异常  
-                Log.Debug("客户端" + socketServer.RemoteEndPoint + "已经中断连接" + "\r\n" + ex.Message + "\r\n" + ex.StackTrace + "\r\n");
-                //关闭之前accept出来的和客户端进行通信的套接字 
-                socketServer.Close();
-                break;
+                Log.Debug($"接收客户端发送不存在信息{m_Socket.RemoteEndPoint}断开连接");
+                RoleManager.Instance.UnRegisterRole(m_Socket.RemoteEndPoint.ToString());
             }
+        }
+        catch (Exception e)
+        {
+            Log.Debug($"捕抓客户端:{m_Socket.RemoteEndPoint}接收异常断开连接 {e}");
+            RoleManager.Instance.UnRegisterRole(m_Socket.RemoteEndPoint.ToString());
         }
     }
 
     private void ReceiveCallBack(IAsyncResult ar)
     {
         Socket socket = (Socket)ar.AsyncState;
-
-        
+   
         try
         {
             int bytesReceived = socket.EndReceive(ar);
-
-            Log.Debug("开始解析byte");
-            Log.Debug(bytesReceived.ToString());
-            while (true)
-            {
-                byte[] arrServerRecMsg = new byte[8192];
-
-                int length = socket.Receive(arrServerRecMsg);
-
-                Log.Debug(length.ToString());
-
-                MemoryStream clientStream = new MemoryStream(arrServerRecMsg);
-                CSPacketHeader header = Serializer.DeserializeWithLengthPrefix<CSPacketHeader>(clientStream, PrefixStyle.Fixed32);
-                Log.Debug(header.ToString());
-                if (header == null)
-                {
-                    Log.Debug("包头解析出错");
-                    break;
-                }
-                else
-                {
-                    //解包
-                    CSLogin packet = new CSLogin();
-                    packet = (CSLogin)RuntimeTypeModel.Default.DeserializeWithLengthPrefix(clientStream, packet, typeof(CSLogin), PrefixStyle.Fixed32, 0);
-
-                    if (packet == null)
-                    {
-                        Log.Debug("包体解析出错");
-                        break;
-                    }
-                    else
-                    {
-                        Log.Debug($"包体:{packet.Account}  {packet.Password}");
-                    }
-                    break;
-                }
-            }
-
+      
             //存在数据
             if (bytesReceived > 0)
-            {
-                while (false)
-                {                
-
-                    /*//拆包头
-                    CSPacketHeader header = null;
-                    header = (CSPacketHeader)RuntimeTypeModel.Default.Deserialize(m_ReceiveState, header,typeof(CSPacketHeader));
-                    if (header == null)
-                    {
-                        Log.Debug("包头解析出错");
-                        break;
-                    }
-                    else
-                    {
-                        //通过拿到的包头 来解析协议类
-                        Log.Debug($"包头: 包体Code{header.Id} 包体长度{header.PacketLength.ToString()}");
-
-                        //拆包体TODO
-                        CSLogin packet = null;
-                        packet = (CSLogin)RuntimeTypeModel.Default.DeserializeWithLengthPrefix(m_ReceiveState, packet, typeof(CSLogin), PrefixStyle.Fixed32, 0);
-                        if (packet == null)
-                        {
-                            Log.Debug("包体解析出错");
-                            break;
-                        }
-                        else
-                        {
-                            Log.Debug($"包体:{packet.Account}  {packet.Password}");
-                        }
-                        break;
-                    }
-                    
-                    //Send(datas);
-                    */
-                }
-
-                #region
-                /*
+            {              
                 //把接收到的数据 写入缓冲数据流的尾部
                 m_ReceiveMS.Position = m_ReceiveMS.Length;
 
                 //把指定长度的字节  写入数据流
-                m_ReceiveMS.Write(m_ReceiveBuffer, 0, len);
+                m_ReceiveMS.Write(m_ReceiveBuffer, 0, bytesReceived);
 
                 //如果缓存数据流的长度大于2  至少有一个不完整的包过来了
                 //为什么是2呢  因为我们客户端数据包 ushort 长度为2
@@ -325,10 +251,9 @@ public class ClientSocket
                             break;
                         }
                     }
-                }*/
+                }
                 //循环接收数据包 一个包接完了  可以继续接收了
-                #endregion
-
+                ReceiveMessage();
             }
             else
             {

@@ -60,6 +60,7 @@
      <Compile Include="Assets\GameMain\Scripts\Procedure\ProcedureLaunch.cs" />
      <Compile Include="Assets\GameMain\XLua\Examples\08_Hotfix\HotfixTest.cs" />
      <Compile Include="Assets\GameMain\XLua\Src\LuaDLL.cs" />
+     <Compile Include="Assets\GameMain\Scripts\Network\PacketStructure\PacketCoding.cs" />
      <Compile Include="Assets\GameMain\Scripts\Procedure\ProcedureBase.cs" />
      <Compile Include="Assets\GameMain\XLua\Tutorial\LoadLuaScript\ByFile\ByFile.cs" />
      <Compile Include="Assets\GameMain\Scripts\Base\GameEntry.cs" />
@@ -132,6 +133,7 @@
      <Compile Include="Assets\GameMain\XLua\Examples\05_NoGc\NoGc.cs" />
      <Compile Include="Assets\GameMain\XLua\Src\ObjectCasters.cs" />
      <Compile Include="Assets\GameMain\XLua\Src\SignatureLoader.cs" />
+     <Compile Include="Assets\GameMain\Scripts\Network\PacketHandler\SCLoginHandler.cs" />
      <Compile Include="Assets\GameMain\XLua\Src\TypeExtensions.cs" />
      <Compile Include="Assets\GameMain\Scripts\UI\UIForm\DialogForm.cs" />
      <Compile Include="Assets\GameMain\Scripts\Proto\System_SendLocalTimeProto.cs" />
@@ -170,8 +172,7 @@
      <Compile Include="Assets\GameMain\Scripts\AStar\AStarPath.cs" />
      <Compile Include="Assets\GameMain\Scripts\Proto\ProtoCodeDef.cs" />
      <Compile Include="Assets\GameMain\Scripts\Procedure\ProcedureSplash.cs" />
-     <Compile Include="Assets\GameMain\Scripts\Network\PacketHandler\SCLoginHandler.cs" />
-     <Compile Include="Assets\GameMain\Scripts\Network\PacketStructure\PacketCoding.cs" />
+     <Compile Include="Assets\GameMain\Scripts\TestServer.cs" />
      <None Include="Assets\GameMain\XLua\Examples\07_AsyncTest\Resources\async_test.lua.txt" />
      <None Include="Assets\GameMain\XLua\Tutorial\LoadLuaScript\ByFile\Resources\byfile.lua.txt" />
      <None Include="Assets\GameMain\TextMesh Pro\Resources\Shaders\TMPro.cginc" />

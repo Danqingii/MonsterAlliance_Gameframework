@@ -25,6 +25,20 @@ namespace Game
             set;
         }
 
+        public bool IsCompress
+        {
+            get
+            {
+                return PacketLength > 1024;
+            }
+        }
+
+        public abstract uint Crc32
+        {
+            get;
+            set;
+        }
+
         public bool IsValid
         {
             get
