@@ -231,6 +231,8 @@ namespace GameFramework.Network
                     return;
                 }
 
+                UnityEngine.Debug.Log("发送结束");
+                
                 //发送完毕了 重置发送流
                 m_SentPacketCount++;
                 m_SendState.Reset();

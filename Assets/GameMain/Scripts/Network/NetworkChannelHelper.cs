@@ -180,13 +180,16 @@ namespace Game
             
             /* 以下内容为木头本人做的改动,不知道是否有错误的地方(虽然它运行起来是正确的),希望大家能帮忙指正 */
             // 因为头部消息有12字节长度，所以先跳过12字节
+            m_CachedStream.SetLength(m_CachedStream.Capacity);
             m_CachedStream.Position = PacketHeaderLength;
             Serializer.SerializeWithLengthPrefix(m_CachedStream, packet, PrefixStyle.Fixed32);
             //序列化包 因为
+            UnityEngine.Debug.Log($"序列化包体{packet.GetType().FullName}");
 
             // 头部消息
             CSPacketHeader packetHeader = ReferencePool.Acquire<CSPacketHeader>();
             packetHeader.Id = packet.Id;
+            packetHeader.Crc32 = 33333;
             packetHeader.PacketLength = (int)m_CachedStream.Length - PacketHeaderLength; // 消息内容长度需要减去头部消息长度
 
             m_CachedStream.Position = 0;
