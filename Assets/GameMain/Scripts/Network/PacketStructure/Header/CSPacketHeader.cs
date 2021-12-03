@@ -31,12 +31,5 @@ namespace Game
             get;
             set;
         }
-
-        [ProtoMember(3)]
-        public override uint Crc32
-        {
-            get; 
-            set;
-        }
     }
 }

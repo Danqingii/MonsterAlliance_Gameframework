@@ -12,14 +12,14 @@ namespace Game
         {
             get
             {
-                return 2;
+                return PacketCoding.SCHeartBeat;
             }
         }
 
         public override void Handle(object sender, Packet packet)
         {
             SCHeartBeat packetImpl = (SCHeartBeat)packet;
-            Log.Info("Receive packet '{0}'.", packetImpl.Id.ToString());
+            Log.Info("客户端: Receive packet '{0}'.", packetImpl.Id.ToString());
         }
     }
 }

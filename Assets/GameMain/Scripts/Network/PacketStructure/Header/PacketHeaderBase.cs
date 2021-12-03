@@ -33,12 +33,6 @@ namespace Game
             }
         }
 
-        public abstract uint Crc32
-        {
-            get;
-            set;
-        }
-
         public bool IsValid
         {
             get

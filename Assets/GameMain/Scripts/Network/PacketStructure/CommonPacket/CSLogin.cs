@@ -6,15 +6,11 @@ namespace Game
     [Serializable, ProtoContract(Name = @"CSLogin")]
     public class CSLogin : CSPacketBase
     {
-        public CSLogin()
-        {
-        }
-
         public override int Id
         {
             get
             {
-                return 10001;
+                return PacketCoding.CSLogin;
             }
         }
         

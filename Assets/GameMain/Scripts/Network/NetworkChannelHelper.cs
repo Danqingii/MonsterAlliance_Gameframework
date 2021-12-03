@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using UnityGameFramework.Runtime;
-using Object = UnityEngine.Object;
 
 namespace Game
 {
@@ -27,14 +26,14 @@ namespace Game
         private INetworkChannel m_NetworkChannel = null;                             //具体的频道
 
         /// <summary>
-        /// 获取消息包头长度 包头是固定的 从包头得到包体的解析 这里是12个字节 + 1个是否为压缩包字节。
+        /// 获取消息包头长度 包头是固定的 从包头得到包体的解析 这里是12个字节。
         /// </summary>
         public int PacketHeaderLength
         {
             get
             {
-                //有3个int信息需要传递 + 一个bool消息传递 = 9个字节
-                return sizeof(int) * 3;
+                //有2个int信息需要传递
+                return sizeof(int) * 2;
             }
         }
 
@@ -44,8 +43,6 @@ namespace Game
         /// <param name="networkChannel">网络频道。</param>
         public void Initialize(INetworkChannel networkChannel)
         {
-            Log.Debug("TODO 初始化网络频道");
-            
             m_NetworkChannel = networkChannel;
 
             //反射注册包和包处理函数。 也就是把服务器发给客户端的包全部都注册一下
@@ -143,72 +140,37 @@ namespace Game
                 return false;
             }
             
-            /*
-            // 此行防止 Array.Copy 的数据无法写入
-            m_CachedStream.SetLength(m_CachedStream.Capacity);
-
-            //跳过包头的位置 前面的位置留给包头
-            m_CachedStream.Position = PacketHeaderLength;
+            //TODO这里可以做一系列的处理
+                
+            //数据包压缩
+                
+            //数据包crc32验证
+                
+            //数据包加密验证 
+            
+            //没看懂为什么要发这么大的包
+            //m_CachedStream.SetLength(m_CachedStream.Capacity);
             
             //序列化包体
-            Serializer.SerializeWithLengthPrefix(m_CachedStream, packet, PrefixStyle.Fixed32);
-            UnityEngine.Debug.Log($"{(packet as CSLogin).Account} {(packet as CSLogin).Password}");
-            byte[] buffer = m_CachedStream.ToArray();
-
-            MemoryStream strame = new MemoryStream(buffer.Length);
-            strame.Write(buffer,0,buffer.Length);
-            CSLogin csLogin = Serializer.DeserializeWithLengthPrefix<CSLogin>(m_CachedStream,PrefixStyle.Fixed32);
-            UnityEngine.Debug.Log($"{csLogin.Account} {csLogin.Password}");
-            
-            
-            //头部消息
-            CSPacketHeader packetHeader = ReferencePool.Acquire<CSPacketHeader>();
-            packetHeader.Id = packet.Id;
-            packetHeader.Crc32 = 33333;
-            packetHeader.PacketLength = (int)m_CachedStream.Length - PacketHeaderLength;
-            
-            //序列化包头
-            m_CachedStream.Position = 0L;
-            Serializer.Serialize(m_CachedStream, packetHeader);
-            
-            ReferencePool.Release((IReference)packet);
-            ReferencePool.Release(packetHeader);
-
-            //把序列化的结果 写入到了 目标流:destination
-            m_CachedStream.WriteTo(destination);
-            
-            
-            /* 以下内容为木头本人做的改动,不知道是否有错误的地方(虽然它运行起来是正确的),希望大家能帮忙指正 */
-            // 因为头部消息有12字节长度，所以先跳过12字节
-            m_CachedStream.SetLength(m_CachedStream.Capacity);
             m_CachedStream.Position = PacketHeaderLength;
             Serializer.SerializeWithLengthPrefix(m_CachedStream, packet, PrefixStyle.Fixed32);
-            //序列化包 因为
-            UnityEngine.Debug.Log($"序列化包体{packet.GetType().FullName}");
 
-            // 头部消息
+            //包头信息
             CSPacketHeader packetHeader = ReferencePool.Acquire<CSPacketHeader>();
             packetHeader.Id = packet.Id;
-            packetHeader.Crc32 = 33333;
-            packetHeader.PacketLength = (int)m_CachedStream.Length - PacketHeaderLength; // 消息内容长度需要减去头部消息长度
+            packetHeader.PacketLength = (int)m_CachedStream.Length - PacketHeaderLength; //消息内容长度需要减去头部消息长度
 
+            //序列化
             m_CachedStream.Position = 0;
             Serializer.SerializeWithLengthPrefix(m_CachedStream, packetHeader, PrefixStyle.Fixed32);
 
             ReferencePool.Release((IReference)packet);
             ReferencePool.Release(packetHeader);
+            
             m_CachedStream.WriteTo(destination);
-            
-            /*byte[] idBytes = BitConverter.GetBytes(packetHeader.Id);
-            m_CachedStream.Write(idBytes,0,idBytes.Length);
-            
-            byte[] packLenBytes = BitConverter.GetBytes(packetHeader.PacketLength);
-            m_CachedStream.Write(packLenBytes,0,packLenBytes.Length);
-            
-            byte[] crc32Bytes = BitConverter.GetBytes(packetHeader.Crc32);
-            m_CachedStream.Write(crc32Bytes,0,crc32Bytes.Length);
 
-            //m_CachedStream.WriteByte((byte) (packetHeader.IsCompress == true ? 1 : 0));*/
+            m_CachedStream.Position = 0;
+            m_CachedStream.SetLength(0);
             return true;
         }
 
@@ -225,7 +187,9 @@ namespace Game
             customErrorData = null;
             
             //protobuf 的反序列化包头
-            return (IPacketHeader)RuntimeTypeModel.Default.Deserialize(source, ReferencePool.Acquire<SCPacketHeader>(), typeof(SCPacketHeader));
+            return (IPacketHeader)Serializer.DeserializeWithLengthPrefix<SCPacketHeader>(source, PrefixStyle.Fixed32);
+            
+            //return (IPacketHeader)RuntimeTypeModel.Default.Deserialize(source, ReferencePool.Acquire<SCPacketHeader>(), typeof(SCPacketHeader));
         }
 
         /// <summary>
@@ -252,7 +216,7 @@ namespace Game
             Packet packet = null;
             if (scPacketHeader.IsValid)
             {
-                //这里可以做一系列的处理TODO
+                //TODO这里可以做一系列的处理
                 
                 //数据包是否压缩
                 
@@ -266,7 +230,8 @@ namespace Game
                 Type packetType = GetServerToClientPacketType(scPacketHeader.Id);
                 if (packetType != null)
                 {
-                    packet = (Packet)RuntimeTypeModel.Default.DeserializeWithLengthPrefix(source, ReferencePool.Acquire(packetType), packetType, PrefixStyle.Fixed32, 0);
+                     packet = (Packet)RuntimeTypeModel.Default.DeserializeWithLengthPrefix(source, ReferencePool.Acquire(packetType), packetType, PrefixStyle.Base128,0);
+                    //packet = (Packet)RuntimeTypeModel.Default.DeserializeWithLengthPrefix(source, ReferencePool.Acquire(packetType), packetType, PrefixStyle.Fixed32, 0);
                 }
                 else
                 {

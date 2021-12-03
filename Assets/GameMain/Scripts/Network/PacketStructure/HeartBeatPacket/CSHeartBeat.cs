@@ -13,12 +13,11 @@ namespace Game
         {
         }
 
-        [ProtoMember(1)]
         public override int Id
         {
             get
             {
-                return 10000;
+                return PacketCoding.CSHeartBeat;
             }
         }
 

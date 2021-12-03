@@ -34,7 +34,12 @@ namespace Game
 
             if (Input.GetKeyDown(KeyCode.A))
             {
-                channel.Send(new CSLogin(){Account = "1", Password = "2"});
+                //channel.Send(new CSLogin(){Account = "1", Password = "2"});
+            }
+            
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                //helper.SendHeartBeat();
             }
         }
     }

@@ -12,13 +12,13 @@ namespace Game
         {
             get
             {
-                return 5;
+                return PacketCoding.SCLogin;
             }
         }
         public override void Handle(object sender, Packet packet)
         {
             SCLogin packetImpl = (SCLogin) packet;
-            Log.Info("Receive SCLogin 包 '{0}'.", packetImpl.IsCanLogin.ToString());
+            Log.Info("客户端: Receive SCLogin 包 '{0}'.", packetImpl.IsCanLogin.ToString());
         }
     }
 }

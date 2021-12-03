@@ -16,7 +16,7 @@ namespace Game
         {
             get
             {
-                return 20000;
+                return PacketCoding.SCHeartBeat;
             }
         }
 

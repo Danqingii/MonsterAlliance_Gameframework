@@ -3,22 +3,18 @@ using ProtoBuf;
 
 namespace Game
 {
+    [Serializable, ProtoContract(Name = @"SCLogin")]
     public class SCLogin : SCPacketBase
     {
-        public SCLogin()
-        {
-        }
-
-        [ProtoMember(1)]
         public override int Id
         {
             get
             {
-                return 20001;
+                return PacketCoding.SCLogin;
             }
         }
         
-        [ProtoMember(2)]
+        [ProtoMember(1)]
         public bool IsCanLogin
         {
             get;
@@ -27,6 +23,7 @@ namespace Game
 
         public override void Clear()
         {
+            IsCanLogin = false;
         }
     }
 }
