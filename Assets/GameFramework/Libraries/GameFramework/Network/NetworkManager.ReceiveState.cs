@@ -58,7 +58,7 @@ namespace GameFramework.Network
                 {
                     throw new GameFrameworkException("Packet header is invalid.");
                 }
-
+                
                 Reset(packetHeader.PacketLength, packetHeader);
             }
 

@@ -33,7 +33,7 @@ public partial class ServerComponent : GameFrameworkComponent
      private MemoryStream m_ReceiveState;                              //接收状态流
      private MemoryStream m_SendState;                                 //发送状态流
      
-     private readonly Queue<byte[]> m_SendQuene = new Queue<byte[]>(); //发送消息队列
+     private readonly Queue<Packet> m_SendQuene = new Queue<Packet>(); //发送消息队列
      private Action m_CheckSendQuene;                                  //核查队列的委托
 
      //包头的长度 现在是8
@@ -185,7 +185,7 @@ public partial class ServerComponent : GameFrameworkComponent
                                         Type packType = GetClientToServerPacketType(packetCode); 
                                         
                                         //通过协议号 得到包体的类型
-                                        Packet packet = (Packet)RuntimeTypeModel.Default.DeserializeWithLengthPrefix(m_ReceiveState, ReferencePool.Acquire(packType), packType, PrefixStyle.Base128,0);
+                                        Packet packet = Serializer.Deserialize<Packet>(m_ReceiveState);
 
                                         if (packet == null)
                                         {
@@ -264,7 +264,7 @@ public partial class ServerComponent : GameFrameworkComponent
           {
                if (m_SendQuene.Count > 0)
                {
-                    SendMessage(m_SendQuene.Dequeue());
+                    Send(m_SendQuene.Dequeue());
                }
           }
      }
@@ -275,7 +275,6 @@ public partial class ServerComponent : GameFrameworkComponent
           {
                SCLogin scLogin = ReferencePool.Acquire<SCLogin>();
                scLogin.IsCanLogin = false;
-
                Send(scLogin);
           }
           
@@ -324,32 +323,39 @@ public partial class ServerComponent : GameFrameworkComponent
           Debug.Log($"序列化包头长度{PacketHeaderLength}  序列化包体长度{packetHeader.PacketLength}");
           //序列化
           m_SendState.Position = 0;
-          Serializer.SerializeWithLengthPrefix(m_SendState, packetHeader, PrefixStyle.Fixed32);
+          Serializer.SerializeWithLengthPrefix(m_SendState,packetHeader,PrefixStyle.Fixed32);
           
           ReferencePool.Release((IReference)packet);
           ReferencePool.Release(packetHeader);
           //发送消息
-          SendMessage(m_SendState.ToArray());
+          SendMessage(m_SendState);
 
           //归零
-          m_SendState.Position = 0;
-          m_SendState.SetLength(0);
+          m_SendState.Position = 0L;
+          m_SendState.SetLength(0L);
           return true;
      }
 
-     private void SendMessage(byte[] packet)
+     private void SendMessage(MemoryStream sendStream)
      {
-          m_ClientSocket.BeginSend(packet, 0, packet.Length, SocketFlags.None, OnSendCallback, m_ClientSocket);
+          m_ClientSocket.BeginSend(sendStream.GetBuffer(), 0, (int)sendStream.Length, SocketFlags.None, OnSendCallback, m_ClientSocket);
      }
 
      private void OnSendCallback(IAsyncResult ar)
      {
+          Socket socket = (Socket)ar.AsyncState;
+          if (!socket.Connected)
+          {
+               return;
+          }
+
+          //发送成功会返回 发送的字节数
           try
           {
-               m_ClientSocket.EndSend(ar);
+               socket.EndSend(ar);
                
-               //继续检查队列
-               m_CheckSendQuene();
+               //继续核查是否有可以发送的数据
+               OnCheckSendQuene();
           }
           catch (Exception e)
           {

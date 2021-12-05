@@ -175,9 +175,16 @@ namespace GameFramework.Network
                     //不对此调用使用任何标志
                     //发送回调
                     //自定义消息
-                    m_Socket.BeginSend(m_SendState.Stream.GetBuffer(),
+                    /*m_Socket.BeginSend(m_SendState.Stream.GetBuffer(),
                         (int)m_SendState.Stream.Position, 
                         (int)(m_SendState.Stream.Length - m_SendState.Stream.Position), 
+                        SocketFlags.None, 
+                        m_SendCallback,
+                        m_Socket);*/
+                    
+                    m_Socket.BeginSend(m_SendState.Stream.GetBuffer(),
+                        0, 
+                        (int)m_SendState.Stream.Length, 
                         SocketFlags.None, 
                         m_SendCallback,
                         m_Socket);
@@ -250,12 +257,24 @@ namespace GameFramework.Network
                     //接受消息的回调
                     //用户定义的对象
                     m_Socket.BeginReceive(
+                         m_ReceiveState.Stream.GetBuffer(),
+                         (int)m_ReceiveState.Stream.Position, 
+                         (int)(m_ReceiveState.Stream.Length - m_ReceiveState.Stream.Position),
+                         SocketFlags.None,  
+                         m_ReceiveCallback,
+                         m_Socket);
+                    
+                    
+                    //TODO 解决缓存包问题
+                    /*m_Socket.BeginReceive(
                         m_ReceiveState.Stream.GetBuffer(),
-                        (int)m_ReceiveState.Stream.Position, 
-                        (int)(m_ReceiveState.Stream.Length - m_ReceiveState.Stream.Position),
+                        0, 
+                        (int)(m_ReceiveState.Stream.Length),
                         SocketFlags.None,  
                         m_ReceiveCallback,
-                        m_Socket);
+                        m_Socket);*/
+                    
+                    UnityEngine.Debug.Log($"开始接受 {m_ReceiveState.Stream.GetBuffer().Length}  {(int)m_ReceiveState.Stream.Position}  {(int)(m_ReceiveState.Stream.Length - m_ReceiveState.Stream.Position)}");
                 }
                 catch (Exception exception)
                 {
@@ -285,6 +304,8 @@ namespace GameFramework.Network
                 {
                     //得到接收的字节数
                     bytesReceived = socket.EndReceive(ar);
+
+                    UnityEngine.Debug.Log($"接收的字节为{bytesReceived}");
                 }
                 catch (Exception exception)
                 {
@@ -306,12 +327,17 @@ namespace GameFramework.Network
                     return;
                 }
 
+                UnityEngine.Debug.Log($"结束接收 {m_ReceiveState.Stream.GetBuffer().Length}  {(int)m_ReceiveState.Stream.Position}  {(int)(m_ReceiveState.Stream.Length)}");
+
                 //这里也就是粘包黏包处理  把位置 + 长度
                 m_ReceiveState.Stream.Position += bytesReceived;
                 
+                UnityEngine.Debug.Log($"计算接收值 {m_ReceiveState.Stream.GetBuffer().Length}  {(int)m_ReceiveState.Stream.Position}  {(int)(m_ReceiveState.Stream.Length)}");
+
                 //如果流的位置小于了 流的长度  也就是说 包没有接收完全 继续接收
                 if (m_ReceiveState.Stream.Position < m_ReceiveState.Stream.Length)
                 {
+                    UnityEngine.Debug.Log($"流状态 {m_ReceiveState.Stream.GetBuffer().Length}  {(int)m_ReceiveState.Stream.Position}  {(int)(m_ReceiveState.Stream.Length)}");
                     ReceiveAsync();
                     return;
                 }
@@ -323,7 +349,7 @@ namespace GameFramework.Network
 
                 //过程是否成功
                 bool processSuccess = false;
-                
+
                 //包头并不是空的
                 if (m_ReceiveState.PacketHeader != null) 
                 {
@@ -340,6 +366,7 @@ namespace GameFramework.Network
                 //成功的接收了 就继续接收
                 if (processSuccess)
                 {
+                    UnityEngine.Debug.Log($"又开始接受 {m_ReceiveState.Stream.GetBuffer().Length}  {(int)m_ReceiveState.Stream.Position}  {(int)(m_ReceiveState.Stream.Length - m_ReceiveState.Stream.Position)}");
                     ReceiveAsync();
                     return;
                 }

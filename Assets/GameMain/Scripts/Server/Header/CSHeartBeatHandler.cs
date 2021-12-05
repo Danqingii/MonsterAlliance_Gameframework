@@ -29,7 +29,7 @@ namespace Game
                 Log.Info("服务器: Receive packet '{0}'.", packetImpl.Id.ToString());
 
                 //发送一个心跳包
-                //GameEntry.Server.Send(ReferencePool.Acquire<SCHeartBeat>());
+                GameEntry.Server.Send(ReferencePool.Acquire<SCHeartBeat>());
             }
         }
     }

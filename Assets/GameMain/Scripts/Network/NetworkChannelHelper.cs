@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using UnityEngine;
 using UnityGameFramework.Runtime;
 
 namespace Game
@@ -153,7 +154,7 @@ namespace Game
             
             //序列化包体
             m_CachedStream.Position = PacketHeaderLength;
-            Serializer.SerializeWithLengthPrefix(m_CachedStream, packet, PrefixStyle.Fixed32);
+            Serializer.Serialize(m_CachedStream, packet);
 
             //包头信息
             CSPacketHeader packetHeader = ReferencePool.Acquire<CSPacketHeader>();
@@ -185,11 +186,14 @@ namespace Game
             // 反序列化包头是在解包的异步调用的！
             // 注意：此函数并不在主线程调用！
             customErrorData = null;
+
+            //MemoryStream ms = (MemoryStream) source;
+            //UnityEngine.Debug.Log($"{ms.GetBuffer().Length}  {(int)ms.Position}  {(int)(ms.Length - ms.Position)}");
+            SCPacketHeader header = Serializer.DeserializeWithLengthPrefix<SCPacketHeader>(source, PrefixStyle.Fixed32);
             
-            //protobuf 的反序列化包头
-            return (IPacketHeader)Serializer.DeserializeWithLengthPrefix<SCPacketHeader>(source, PrefixStyle.Fixed32);
+            Debug.Log($"包体的协议Id{header.Id}  包体的长度{header.PacketLength}");
             
-            //return (IPacketHeader)RuntimeTypeModel.Default.Deserialize(source, ReferencePool.Acquire<SCPacketHeader>(), typeof(SCPacketHeader));
+            return header;
         }
 
         /// <summary>
@@ -226,11 +230,14 @@ namespace Game
                 
                 //TODO 经过了上面所有的操作 得到真正的数据包 然后解析
                 
+                MemoryStream ms = (MemoryStream) source;
+                UnityEngine.Debug.Log($"解包的时候数据 {ms.GetBuffer().Length}  {(int)ms.Position}  {(int)(ms.Length)}");
+                
                 //如果不存在 注册过的 服务器-客户端包  爆警告
                 Type packetType = GetServerToClientPacketType(scPacketHeader.Id);
                 if (packetType != null)
                 {
-                     packet = (Packet)RuntimeTypeModel.Default.DeserializeWithLengthPrefix(source, ReferencePool.Acquire(packetType), packetType, PrefixStyle.Base128,0);
+                    packet = (Packet)RuntimeTypeModel.Default.DeserializeWithLengthPrefix(source, ReferencePool.Acquire(packetType), packetType, PrefixStyle.Fixed32, 0);
                     //packet = (Packet)RuntimeTypeModel.Default.DeserializeWithLengthPrefix(source, ReferencePool.Acquire(packetType), packetType, PrefixStyle.Fixed32, 0);
                 }
                 else

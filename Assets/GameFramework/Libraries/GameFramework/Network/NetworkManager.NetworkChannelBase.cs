@@ -521,6 +521,7 @@ namespace GameFramework.Network
                 {
                     return false;
                 }
+                //TODO 没看懂 下次可以看看
 
                 while (m_SendPacketPool.Count > 0)
                 {
@@ -603,10 +604,10 @@ namespace GameFramework.Network
                         throw new GameFrameworkException(errorMessage);
                     }
 
-                    //包头不为空 缓存一下包头
+                    //设置接受状态下 流的长度 =  packetHeader.PacketLength
                     m_ReceiveState.PrepareForPacket(packetHeader);
                     
-                    //如果包头长度为0 也就是可以直接发送包  不发送包头了
+                    //如果包头长度为0 也就是可以 直接解包
                     if (packetHeader.PacketLength <= 0)
                     {
                         bool processSuccess = ProcessPacket();
@@ -635,7 +636,7 @@ namespace GameFramework.Network
             {
                 lock (m_HeartBeatState)
                 {
-                    //发包之前 重置一下 心跳包
+                    //接受到了包 就重置一下心跳包的时间间隔
                     m_HeartBeatState.Reset(m_ResetHeartBeatElapseSecondsWhenReceivePacket);
                 }
 
