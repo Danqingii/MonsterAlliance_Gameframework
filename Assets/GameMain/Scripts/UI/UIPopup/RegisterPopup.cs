@@ -38,6 +38,7 @@ namespace Game
 
         private void OnRegisterClick()
         {
+            /*
             RegisterDBData dbData = RegisterDBData.Create(m_EmailField.text,m_UserNameField.text,m_PasswordField.text);
             bool insertState = GameEntry.MongoDB.InsertData("Login",dbData);
             dbData.Clear();
@@ -50,6 +51,7 @@ namespace Game
             {
                 //GameEntry.UI.OpenDialog();
             }
+            */
         }
     }
 }

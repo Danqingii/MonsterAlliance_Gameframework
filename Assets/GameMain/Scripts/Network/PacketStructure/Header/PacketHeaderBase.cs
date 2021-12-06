@@ -24,15 +24,7 @@ namespace Game
             get;
             set;
         }
-
-        public bool IsCompress
-        {
-            get
-            {
-                return PacketLength > 1024;
-            }
-        }
-
+        
         public bool IsValid
         {
             get

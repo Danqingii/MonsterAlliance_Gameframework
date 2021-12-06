@@ -6,7 +6,7 @@ using UnityGameFramework.Runtime;
 public partial class ServerComponent : GameFrameworkComponent
 {
     /// <summary>
-    /// 事件处理者 观察者模式
+    /// 事件处理者 派发服务器事件
     /// </summary>
     private class PackDispatche
     {

@@ -34,7 +34,7 @@ namespace Game
             get
             {
                 //有2个int信息需要传递
-                return sizeof(int) * 2;
+                return sizeof(int) * 3;
             }
         }
 
@@ -152,24 +152,26 @@ namespace Game
             //没看懂为什么要发这么大的包
             //m_CachedStream.SetLength(m_CachedStream.Capacity);
             
-            //序列化包体
+            //序列化包体 用PrefixStyle.Base128 会压缩包体的体积
             m_CachedStream.Position = PacketHeaderLength;
-            Serializer.Serialize(m_CachedStream, packet);
+            Serializer.SerializeWithLengthPrefix(m_CachedStream, packet, PrefixStyle.Base128);
 
             //包头信息
             CSPacketHeader packetHeader = ReferencePool.Acquire<CSPacketHeader>();
             packetHeader.Id = packet.Id;
-            packetHeader.PacketLength = (int)m_CachedStream.Length - PacketHeaderLength; //消息内容长度需要减去头部消息长度
+            packetHeader.PacketLength = (int)m_CachedStream.Length - PacketHeaderLength;
 
-            //序列化
+            //序列化包头
             m_CachedStream.Position = 0;
             Serializer.SerializeWithLengthPrefix(m_CachedStream, packetHeader, PrefixStyle.Fixed32);
 
             ReferencePool.Release((IReference)packet);
             ReferencePool.Release(packetHeader);
             
+            //把缓存流写入到目标流
             m_CachedStream.WriteTo(destination);
 
+            //重置包位置
             m_CachedStream.Position = 0;
             m_CachedStream.SetLength(0);
             return true;
@@ -186,14 +188,7 @@ namespace Game
             // 反序列化包头是在解包的异步调用的！
             // 注意：此函数并不在主线程调用！
             customErrorData = null;
-
-            //MemoryStream ms = (MemoryStream) source;
-            //UnityEngine.Debug.Log($"{ms.GetBuffer().Length}  {(int)ms.Position}  {(int)(ms.Length - ms.Position)}");
-            SCPacketHeader header = Serializer.DeserializeWithLengthPrefix<SCPacketHeader>(source, PrefixStyle.Fixed32);
-            
-            Debug.Log($"包体的协议Id{header.Id}  包体的长度{header.PacketLength}");
-            
-            return header;
+            return Serializer.DeserializeWithLengthPrefix<SCPacketHeader>(source, PrefixStyle.Fixed32);
         }
 
         /// <summary>
@@ -208,7 +203,7 @@ namespace Game
             // 注意：此函数并不在主线程调用！
             customErrorData = null;
 
-            //把具体的包头转换一下
+            //把包头转换出来
             SCPacketHeader scPacketHeader = packetHeader as SCPacketHeader;
             if (scPacketHeader == null)
             {
@@ -217,7 +212,6 @@ namespace Game
             }
 
             //从包头得到具体有用的信息
-            Packet packet = null;
             if (scPacketHeader.IsValid)
             {
                 //TODO这里可以做一系列的处理
@@ -230,15 +224,17 @@ namespace Game
                 
                 //TODO 经过了上面所有的操作 得到真正的数据包 然后解析
                 
-                MemoryStream ms = (MemoryStream) source;
-                UnityEngine.Debug.Log($"解包的时候数据 {ms.GetBuffer().Length}  {(int)ms.Position}  {(int)(ms.Length)}");
-                
-                //如果不存在 注册过的 服务器-客户端包  爆警告
+                //如果不存在 注册过的 服务器-客户端包处理者  输入一个警告
                 Type packetType = GetServerToClientPacketType(scPacketHeader.Id);
                 if (packetType != null)
                 {
-                    packet = (Packet)RuntimeTypeModel.Default.DeserializeWithLengthPrefix(source, ReferencePool.Acquire(packetType), packetType, PrefixStyle.Fixed32, 0);
-                    //packet = (Packet)RuntimeTypeModel.Default.DeserializeWithLengthPrefix(source, ReferencePool.Acquire(packetType), packetType, PrefixStyle.Fixed32, 0);
+                    Packet packet = (Packet)RuntimeTypeModel.Default.DeserializeWithLengthPrefix(source,ReferencePool.Acquire(packetType),packetType,PrefixStyle.Base128,0);
+
+                    if (packet != null)
+                    {
+                        return packet;
+                    }
+                    Log.Warning("Description Failed to parse the Baotou protocol '{0} '.", scPacketHeader.Id.ToString());
                 }
                 else
                 {
@@ -251,7 +247,9 @@ namespace Game
             }
 
             ReferencePool.Release(scPacketHeader);
-            return packet;
+            
+            //如果
+            return null;
         }
 
         private Type GetServerToClientPacketType(int id)

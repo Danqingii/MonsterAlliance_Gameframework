@@ -20,9 +20,8 @@ using GameEntry = Game.GameEntry;
 /// </summary>
 public partial class ServerComponent : GameFrameworkComponent
 {
-     //客户端To服务器的包
-     private readonly Dictionary<int, Type> m_ClientToServerPacketTypes = new Dictionary<int, Type>();
-     private readonly PackDispatche m_PackDispatche = new PackDispatche();
+     private readonly Dictionary<int, Type> m_ClientToServerPacketTypes = new Dictionary<int, Type>();  //客户端To服务器的包
+     private readonly PackDispatche m_PackDispatche = new PackDispatche();                              //事件派发
 
      private Socket m_ServerSocket;    //测试服务器
      private Socket m_ClientSocket;    //连接的客户端
@@ -36,12 +35,12 @@ public partial class ServerComponent : GameFrameworkComponent
      private readonly Queue<Packet> m_SendQuene = new Queue<Packet>(); //发送消息队列
      private Action m_CheckSendQuene;                                  //核查队列的委托
 
-     //包头的长度 现在是8
+     //包头的长度 现在是12  固定的包头长度 包头的长度是跟随 protobuf的 如果压缩不到位 很容易出问题
      private int PacketHeaderLength
      {
           get
           {
-               return sizeof(int) * 2;
+               return sizeof(int) * 3;
           }
      }
      
@@ -52,13 +51,13 @@ public partial class ServerComponent : GameFrameworkComponent
           m_ReceiveBuffer = new byte[1024 * 10];
           m_ReceiveState = new MemoryStream();
           m_SendState = new MemoryStream(1024 * 10);
-          Init("127.0.0.1", 17779);
+         
           m_CheckSendQuene = OnCheckSendQuene;
      }
 
      private void Start()
      {
-          Type packetBaseType = typeof(CSPacketBase);      //客户端包-服务器包
+          Type packetBaseType = typeof(CSPacketBase);               //客户端包-服务器包
           Type packetHandlerBaseType = typeof(PacketHandlerBase);   //包处理者
           Assembly assembly = Assembly.GetExecutingAssembly();
           Type[] types = assembly.GetTypes();
@@ -75,7 +74,7 @@ public partial class ServerComponent : GameFrameworkComponent
                     Type packetType = GetClientToServerPacketType(packetBase.Id);
                     if (packetType != null)
                     {
-                         Log.Warning("Already exist packet type '{0}', check '{1}' or '{2}'?.", packetBase.Id.ToString(), packetType.Name, packetBase.GetType().Name);
+                         Log.Warning("服务器:Already exist packet type '{0}', check '{1}' or '{2}'?.", packetBase.Id.ToString(), packetType.Name, packetBase.GetType().Name);
                          continue;
                     }
 
@@ -86,27 +85,22 @@ public partial class ServerComponent : GameFrameworkComponent
                {
                     IPacketHandler packetHandler = (IPacketHandler)Activator.CreateInstance(types[i]);
                     
-                    //关键一步 注册处理消息分发
+                    //关键一步 注册服务器处理消息分发 因为我们得不到GF 内置的EventPool 自己我们写一个模拟一下
                     m_PackDispatche.Subscribe(packetHandler.Id, packetHandler.Handle);
                }
           }
      }
-
+     
      private void OnDestroy()
      {
-          if (m_ClientSocket != null)
-          {
-               m_ClientSocket.Shutdown(SocketShutdown.Both);
-               m_ClientSocket.Close();
-          }
-          
-          m_ServerSocket.Close();
-          m_ReceiveTherad.Abort();
+          m_ClientSocket?.Close();
+          m_ServerSocket?.Close();
+          m_ReceiveTherad?.Abort();
      }
 
-     private void Init(string ip,int port)
+     public void Init(string ip,int port)
      {
-          Log.Info("Open Server");
+          Log.Info("Open Local Server");
 
           m_ServerSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
           m_ServerSocket.Bind(new IPEndPoint(IPAddress.Parse(ip), port));
@@ -122,13 +116,12 @@ public partial class ServerComponent : GameFrameworkComponent
           while (true)
           {
                m_ClientSocket = m_ServerSocket.Accept();
-               Log.Info($"服务器:{m_ClientSocket.RemoteEndPoint}已经连接");
+               Log.Info($"服务器:客户端{m_ClientSocket.RemoteEndPoint}已经连接");
 
                Thread thread = new Thread(ReceiveMessage);
                thread.IsBackground = true;
                thread.Start();
           }
-          // ReSharper disable once FunctionNeverReturns
      }
      
      private void ReceiveMessage()
@@ -159,7 +152,7 @@ public partial class ServerComponent : GameFrameworkComponent
                               CSPacketHeader header = Serializer.DeserializeWithLengthPrefix<CSPacketHeader>(m_ReceiveState, PrefixStyle.Fixed32);
                               if (header == null)
                               {
-                                   Log.Error("包头解析失败");
+                                   Log.Error("服务器:反序列化失败");
                               }
                               else
                               {
@@ -184,18 +177,24 @@ public partial class ServerComponent : GameFrameworkComponent
                                         //获取客户端到服务器的包类型
                                         Type packType = GetClientToServerPacketType(packetCode); 
                                         
-                                        //通过协议号 得到包体的类型
-                                        Packet packet = Serializer.Deserialize<Packet>(m_ReceiveState);
-
-                                        if (packet == null)
+                                        if (packType == null)
                                         {
-                                             Log.Error($"包体{packetCode}解析失败");
+                                             Log.Error($"服务器:不能反序列化数据包 {packetCode}");
                                         }
                                         else
                                         {
-                                             Debug.Log($"服务器:分发{packet.Id}消息");
-                                             //通过 处理者分发消息
-                                             m_PackDispatche.Fire(this,packet);   //GameEntry.Event.Fire(this,packet); GF案例 我们因为得不到 EventPool 临时写一个处理者
+                                             //通过协议号 得到包体的类型
+                                             Packet packet = (Packet)RuntimeTypeModel.Default.DeserializeWithLengthPrefix(m_ReceiveState,ReferencePool.Acquire(packType),packType,PrefixStyle.Base128,0);
+
+                                             if (packet == null)
+                                             {
+                                                  Log.Error($"服务器:反序列化数据包失败 {packetCode}");
+                                             }
+                                             else
+                                             {
+                                                  //通过 处理者分发消息
+                                                  m_PackDispatche.Fire(this,packet);   //GameEntry.Event.Fire(this,packet); GF案例 我们因为得不到 EventPool 临时写一个处理者
+                                             }
                                         }
 
                                         //-----------------------------------------------------
@@ -220,10 +219,9 @@ public partial class ServerComponent : GameFrameworkComponent
                                              m_ReceiveState.SetLength(0);
                                              m_ReceiveState.Position = 0;
 
-                                             //这些数据就相当于到头部了
+                                             //把剩余的byte[] 数据写入到接收流头部
                                              m_ReceiveState.Write(remainLenBuffer, 0, remainLen);
 
-                                             //清除缓存器
                                              remainLenBuffer = null;
                                              break;
                                         }
@@ -249,16 +247,16 @@ public partial class ServerComponent : GameFrameworkComponent
                }
                else
                {
-                    Log.Debug($"接收客户端发送不存在信息{m_ClientSocket.RemoteEndPoint}断开连接");
+                    Log.Debug($"服务器:接收客户端发送不存在信息{m_ClientSocket.RemoteEndPoint}断开连接");
                }
           }
           catch (Exception e)
           {
-               Log.Debug($"捕抓客户端:{m_ClientSocket.RemoteEndPoint}接收异常断开连接 {e}");
+               Log.Debug($"服务器:捕抓客户端:{m_ClientSocket.RemoteEndPoint}接收异常断开连接 {e}");
           }
      }
 
-     private void OnCheckSendQuene()
+     private void OnCheckSendQuene() //核查是否存在可发送消息
      {
           lock (m_SendQuene)
           {
@@ -269,34 +267,35 @@ public partial class ServerComponent : GameFrameworkComponent
           }
      }
 
+     /* 测试服务器发送给客户端代码
      private void Update()
      {
           if (Input.GetKeyDown(KeyCode.C))
           {
-               SCLogin scLogin = ReferencePool.Acquire<SCLogin>();
-               scLogin.IsCanLogin = false;
-               Send(scLogin);
+               SCLogin login = ReferencePool.Acquire<SCLogin>();
+               login.IsCanLogin = false;
+               Send(login);
           }
           
           if (Input.GetKeyDown(KeyCode.D))
           {
                Send(ReferencePool.Acquire<SCHeartBeat>());
-               //ReferencePool.Release(scLogin);
           }
      }
+     */
 
      public bool Send<T>(T packet) where  T : Packet
      {
           PacketBase packetImpl = packet as PacketBase;
           if (packetImpl == null)
           {
-               Log.Warning("Packet is invalid.");
+               Log.Warning("服务器:Packet is invalid.");
                return false;
           }
 
           if (packetImpl.PacketType != PacketType.ServerToClient)
           {
-               Log.Warning("Send packet invalid.");
+               Log.Warning("服务器:Send packet invalid.");
                return false;
           }
           
@@ -308,29 +307,31 @@ public partial class ServerComponent : GameFrameworkComponent
                 
           //数据包加密验证 
             
-          //没看懂为什么要发这么大的包
+          //防止无法被拷贝进入其他流
           //m_SendState.SetLength(m_SendState.Capacity);
 
-          //序列化包体
+          //序列化包体 包体可以用 PrefixStyle.Base128 压缩体积
           m_SendState.Position = PacketHeaderLength;
-          Serializer.SerializeWithLengthPrefix(m_SendState, packet, PrefixStyle.Fixed32);
+          Serializer.SerializeWithLengthPrefix(m_SendState, packet, PrefixStyle.Base128);
 
-          //包头信息
+          //包头信息 包头的Id=包体的协议   包头的PacketLength=包体的byte[]长度   流的长度减去包头的长度就是真正的包长度了
           SCPacketHeader packetHeader = ReferencePool.Acquire<SCPacketHeader>();
           packetHeader.Id = packet.Id;
-          packetHeader.PacketLength = (int)m_SendState.Length - PacketHeaderLength; //消息内容长度需要减去头部消息长度
+          packetHeader.PacketLength = (int)m_SendState.Length - PacketHeaderLength; 
 
-          Debug.Log($"序列化包头长度{PacketHeaderLength}  序列化包体长度{packetHeader.PacketLength}");
-          //序列化
+          //序列化包头
           m_SendState.Position = 0;
           Serializer.SerializeWithLengthPrefix(m_SendState,packetHeader,PrefixStyle.Fixed32);
           
+          //Debug.Log($"服务器: 发送消息{packet.GetType().Name} 序列化包头长度{PacketHeaderLength}  序列化包体长度{packetHeader.PacketLength}  流全长{m_SendState.Length}");
+          
           ReferencePool.Release((IReference)packet);
           ReferencePool.Release(packetHeader);
+          
           //发送消息
           SendMessage(m_SendState);
 
-          //归零
+          //重置发送状态
           m_SendState.Position = 0L;
           m_SendState.SetLength(0L);
           return true;
@@ -355,11 +356,11 @@ public partial class ServerComponent : GameFrameworkComponent
                socket.EndSend(ar);
                
                //继续核查是否有可以发送的数据
-               OnCheckSendQuene();
+               m_CheckSendQuene();
           }
           catch (Exception e)
           {
-               Debug.Log($"发送消息失败{e}");
+               Debug.Log($"服务器:发送消息失败{e}");
           }
      }
      

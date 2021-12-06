@@ -18,7 +18,14 @@ namespace Game
         public override void Handle(object sender, Packet packet)
         {
             SCLogin packetImpl = (SCLogin) packet;
-            Log.Info("客户端: Receive SCLogin 包 '{0}'.", packetImpl.IsCanLogin.ToString());
+            if (packetImpl == null)
+            {
+                Log.Error("客户端: SCLogin 转换失败.");
+            }
+            else
+            {
+                Log.Info("客户端: 接收服务器返回登陆协议 '{0}'.", packetImpl.IsCanLogin.ToString());
+            }
         }
     }
 }

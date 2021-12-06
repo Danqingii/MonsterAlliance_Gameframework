@@ -260,7 +260,7 @@ namespace GameFramework.Network
                     return;
                 }
 
-                //消息池  分发消息
+                //轮询 自定义 接收消息池
                 m_ReceivePacketPool.Update(elapseSeconds, realElapseSeconds);
 
                 //m_HeartBeatInterval = 30 > 0  等待发送心跳包
@@ -659,7 +659,7 @@ namespace GameFramework.Network
                         m_ReceivePacketPool.Fire(this, packet);
                     }
 
-                    //分发了包之后重置一下 接收包的状态 把里面的数据给重置掉
+                    //分发了包之后重置一下 接收包的流状态 把里面的数据给重置掉
                     m_ReceiveState.PrepareForPacketHeader(m_NetworkChannelHelper.PacketHeaderLength);
                 }
                 catch (Exception exception)

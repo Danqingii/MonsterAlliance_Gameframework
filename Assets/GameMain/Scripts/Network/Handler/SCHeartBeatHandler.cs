@@ -19,7 +19,14 @@ namespace Game
         public override void Handle(object sender, Packet packet)
         {
             SCHeartBeat packetImpl = (SCHeartBeat)packet;
-            Log.Info("客户端: Receive packet '{0}'.", packetImpl.Id.ToString());
+            if (packetImpl == null)
+            {
+                Log.Error("客户端: SCHeartBeat 转换失败.");
+            }
+            else
+            {
+                Log.Info("客户端: 接收服务器心跳包");
+            }
         }
     }
 }

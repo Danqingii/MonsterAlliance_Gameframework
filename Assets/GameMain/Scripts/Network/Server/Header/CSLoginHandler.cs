@@ -24,7 +24,7 @@ namespace Game
             
             if (packetImpl == null)
             {
-                Log.Error("CSLogin 转换失败.");
+                Log.Error("服务器: CSLogin 转换失败.");
             }
             else
             {
@@ -33,11 +33,9 @@ namespace Game
                 SCLogin scLogin = ReferencePool.Acquire<SCLogin>();
                 scLogin.IsCanLogin = isLogin;
                 
-                Log.Info($"服务器: Receive CSLogin 包 '账号:{packetImpl.Account} 密码:{packetImpl.Password}' 返回{scLogin.IsCanLogin}.");
+                Log.Info($"服务器: 接收客户端登陆协议 '账号:{packetImpl.Account} 密码:{packetImpl.Password}' 返回登陆状态{scLogin.IsCanLogin}.");
+               
                 GameEntry.Server.Send(scLogin);
-                
-                ReferencePool.Release(packetImpl);
-                ReferencePool.Release(scLogin);
             }
         }
     }

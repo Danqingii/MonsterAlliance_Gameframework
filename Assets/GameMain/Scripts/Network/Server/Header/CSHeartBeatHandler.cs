@@ -22,13 +22,13 @@ namespace Game
             CSHeartBeat packetImpl = (CSHeartBeat)packet;
             if (packetImpl == null)
             {
-                Log.Error("CSHeartBeat 转换失败.");
+                Log.Error("服务器: CSHeartBeat 转换失败.");
             }
             else
             {
-                Log.Info("服务器: Receive packet '{0}'.", packetImpl.Id.ToString());
+                Log.Info("服务器: 接收客户端心跳包 返回一个服务器心跳包");
 
-                //发送一个心跳包
+                //给发送一个服务器心跳包
                 GameEntry.Server.Send(ReferencePool.Acquire<SCHeartBeat>());
             }
         }

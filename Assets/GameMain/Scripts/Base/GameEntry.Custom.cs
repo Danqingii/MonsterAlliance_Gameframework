@@ -4,12 +4,6 @@ namespace Game
 {
     public partial class GameEntry : MonoBehaviour
     {
-        public static MongoDBComponent MongoDB
-        {
-            get;
-            private set;
-        }
-
         public static TcpNetworkComponent TcpNetwork
         {
             get;
@@ -32,11 +26,12 @@ namespace Game
         /// </summary>
         private static void InitCustomComponents()
         {
-            MongoDB = UnityGameFramework.Runtime.GameEntry.GetComponent<MongoDBComponent>();
             TcpNetwork = UnityGameFramework.Runtime.GameEntry.GetComponent<TcpNetworkComponent>();
             Server = UnityGameFramework.Runtime.GameEntry.GetComponent<ServerComponent>();
             //Xlua = UnityGameFramework.Runtime.GameEntry.GetComponent<LuaComponent>();
             //TcpNetwork.StartConnect();
+            
+            Server.Init("127.0.0.1",17779);
         }
     }
 }

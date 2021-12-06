@@ -9,10 +9,6 @@ namespace Game
     [Serializable, ProtoContract(Name = @"CSHeartBeat")]
     public class CSHeartBeat : CSPacketBase
     {
-        public CSHeartBeat()
-        {
-        }
-
         public override int Id
         {
             get
@@ -20,6 +16,21 @@ namespace Game
                 return PacketCoding.CSHeartBeat;
             }
         }
+        
+        /*private bool m_HeartBeat = true;
+
+        [ProtoMember(1)]
+        public bool HeartBeat
+        {
+            get
+            {
+                return m_HeartBeat;
+            }
+            set
+            {
+                m_HeartBeat = value;
+            }
+        }*/
 
         public override void Clear()
         {

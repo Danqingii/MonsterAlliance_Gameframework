@@ -175,16 +175,9 @@ namespace GameFramework.Network
                     //不对此调用使用任何标志
                     //发送回调
                     //自定义消息
-                    /*m_Socket.BeginSend(m_SendState.Stream.GetBuffer(),
+                    m_Socket.BeginSend(m_SendState.Stream.GetBuffer(),
                         (int)m_SendState.Stream.Position, 
                         (int)(m_SendState.Stream.Length - m_SendState.Stream.Position), 
-                        SocketFlags.None, 
-                        m_SendCallback,
-                        m_Socket);*/
-                    
-                    m_Socket.BeginSend(m_SendState.Stream.GetBuffer(),
-                        0, 
-                        (int)m_SendState.Stream.Length, 
                         SocketFlags.None, 
                         m_SendCallback,
                         m_Socket);
@@ -242,7 +235,7 @@ namespace GameFramework.Network
                 m_SentPacketCount++;
                 m_SendState.Reset();
                 
-                //到这里就是一整个 Tcp发送流程了 基本是非常的完整了
+                //到这里就是一整个 发送流程了 非常的完整
             }
 
             //接受消息回调
@@ -263,18 +256,6 @@ namespace GameFramework.Network
                          SocketFlags.None,  
                          m_ReceiveCallback,
                          m_Socket);
-                    
-                    
-                    //TODO 解决缓存包问题
-                    /*m_Socket.BeginReceive(
-                        m_ReceiveState.Stream.GetBuffer(),
-                        0, 
-                        (int)(m_ReceiveState.Stream.Length),
-                        SocketFlags.None,  
-                        m_ReceiveCallback,
-                        m_Socket);*/
-                    
-                    UnityEngine.Debug.Log($"开始接受 {m_ReceiveState.Stream.GetBuffer().Length}  {(int)m_ReceiveState.Stream.Position}  {(int)(m_ReceiveState.Stream.Length - m_ReceiveState.Stream.Position)}");
                 }
                 catch (Exception exception)
                 {
@@ -304,8 +285,6 @@ namespace GameFramework.Network
                 {
                     //得到接收的字节数
                     bytesReceived = socket.EndReceive(ar);
-
-                    UnityEngine.Debug.Log($"接收的字节为{bytesReceived}");
                 }
                 catch (Exception exception)
                 {
@@ -327,17 +306,16 @@ namespace GameFramework.Network
                     return;
                 }
 
-                UnityEngine.Debug.Log($"结束接收 {m_ReceiveState.Stream.GetBuffer().Length}  {(int)m_ReceiveState.Stream.Position}  {(int)(m_ReceiveState.Stream.Length)}");
-
-                //这里也就是粘包黏包处理  把位置 + 长度
+                //把当前接收流的位置 指向接收的长度
                 m_ReceiveState.Stream.Position += bytesReceived;
                 
-                UnityEngine.Debug.Log($"计算接收值 {m_ReceiveState.Stream.GetBuffer().Length}  {(int)m_ReceiveState.Stream.Position}  {(int)(m_ReceiveState.Stream.Length)}");
-
-                //如果流的位置小于了 流的长度  也就是说 包没有接收完全 继续接收
+                //接收情况
+                //false = 我们第一次 必定要接收到一个包头的字节长度 在这个工程里面是12 然后流的长度也会被设置成12  初始为Position为0 += (包头长度12) = 12  会进行解包头行为
+                //在解析包头的时候 会通过包头的协议长度 得到包体的长度 然后把我们接收流的长度 设置成可以容纳包体的长度
+                
+                //如果Position < 接收流的长度的话  代表包体  一直没有接收满  需要一直接收 等待包体完全的接收
                 if (m_ReceiveState.Stream.Position < m_ReceiveState.Stream.Length)
                 {
-                    UnityEngine.Debug.Log($"流状态 {m_ReceiveState.Stream.GetBuffer().Length}  {(int)m_ReceiveState.Stream.Position}  {(int)(m_ReceiveState.Stream.Length)}");
                     ReceiveAsync();
                     return;
                 }
@@ -350,10 +328,10 @@ namespace GameFramework.Network
                 //过程是否成功
                 bool processSuccess = false;
 
-                //包头并不是空的
+                //包头并不是空的  也就代表已经解析成功包头了
                 if (m_ReceiveState.PacketHeader != null) 
                 {
-                    //执行解包过程 也就是解包
+                    //执行解包过程 解析真正的数据包
                     processSuccess = ProcessPacket();
                     m_ReceivedPacketCount++;
                 }
@@ -363,10 +341,9 @@ namespace GameFramework.Network
                     processSuccess = ProcessPacketHeader();
                 }
 
-                //成功的接收了 就继续接收
+                //成功的接收了 就继续接收 下一个包 提示:在解包完成之后 接收流就重置了 不必担心
                 if (processSuccess)
                 {
-                    UnityEngine.Debug.Log($"又开始接受 {m_ReceiveState.Stream.GetBuffer().Length}  {(int)m_ReceiveState.Stream.Position}  {(int)(m_ReceiveState.Stream.Length - m_ReceiveState.Stream.Position)}");
                     ReceiveAsync();
                     return;
                 }
