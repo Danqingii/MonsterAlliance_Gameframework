@@ -104,7 +104,7 @@ namespace Game
 
         private void TestMongo()
         {
-            MongoManager mongo = GameEntry.Server.MongoManager;
+            /*MongoManager mongo = GameEntry.Server.MongoManager;
 
             var document = new MongoDocument
             {
@@ -126,7 +126,7 @@ namespace Game
             mongos.Add(document1);
             mongos.Add(document2);
             
-            mongo.InsertMany("Test",mongos);
+            mongo.InsertMany("Test",mongos);*/
         }
 
     }
