@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using System.Net;
 using GameFramework.Fsm;
 using GameFramework.Network;
 using GameFramework.Procedure;
+using MongoDB.Bson;
 using UnityEngine;
 
 namespace Game
@@ -81,6 +83,8 @@ namespace Game
             
             Debug.Log($"{packet.Account}  {packet.Password}");
             */
+
+            TestMongo();
         }
 
         protected override void OnUpdate(IFsm<IProcedureManager> procedureOwner, float elapseSeconds, float realElapseSeconds)
@@ -97,5 +101,33 @@ namespace Game
                 helper.SendHeartBeat();
             }
         }
+
+        private void TestMongo()
+        {
+            MongoManager mongo = GameEntry.Server.MongoManager;
+
+            var document = new MongoDocument
+            {
+                { "name", "MongoDB" },
+                { "type", "Database" },
+                { "count", 1 },
+                { "info", new BsonDocument
+                  {
+                      {"x",200},
+                      {"y",300},
+                  }},
+            };
+            mongo.InsertOne("Test",document);
+
+            var document1 = new MongoDocument();
+            var document2 = new MongoDocument();
+            
+            List<BsonDocument> mongos = new List<BsonDocument>();
+            mongos.Add(document1);
+            mongos.Add(document2);
+            
+            mongo.InsertMany("Test",mongos);
+        }
+
     }
 }

@@ -13,10 +13,9 @@ using ProtoBuf.Meta;
 using UnityEngine;
 using UnityGameFramework.Runtime;
 using AddressFamily = System.Net.Sockets.AddressFamily;
-using GameEntry = Game.GameEntry;
 
 /// <summary>
-/// 服务器 --TODO 只是写在 unity里面 模拟服务器的 收发
+/// 服务器 --TODO unity里面 模拟服务器的 收发
 /// </summary>
 public partial class ServerComponent : GameFrameworkComponent
 {
@@ -35,6 +34,8 @@ public partial class ServerComponent : GameFrameworkComponent
      private readonly Queue<Packet> m_SendQuene = new Queue<Packet>(); //发送消息队列
      private Action m_CheckSendQuene;                                  //核查队列的委托
 
+     public MongoManager MongoManager;
+     
      //包头的长度 现在是12  固定的包头长度 包头的长度是跟随 protobuf的 如果压缩不到位 很容易出问题
      private int PacketHeaderLength
      {
@@ -109,6 +110,10 @@ public partial class ServerComponent : GameFrameworkComponent
           m_ReceiveTherad = new Thread(ListenClientCallBack);
           m_ReceiveTherad.IsBackground = true;
           m_ReceiveTherad.Start();
+
+          //初始化数据库
+          MongoManager = new MongoManager();
+          MongoManager.Init();
      }
      
      private void ListenClientCallBack()
