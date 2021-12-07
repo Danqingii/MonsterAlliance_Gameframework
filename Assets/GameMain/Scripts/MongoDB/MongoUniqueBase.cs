@@ -23,7 +23,7 @@ namespace Game
     /// </summary>
     public abstract class MongoUniqueBase
     {
-        private FindOneAndUpdateOptions<YFUniqueEntity,string> options = new FindOneAndUpdateOptions<YFUniqueEntity,string>()
+        private FindOneAndUpdateOptions<YFUniqueEntity> options = new FindOneAndUpdateOptions<YFUniqueEntity>()
         {
             IsUpsert = true
         };
@@ -76,14 +76,14 @@ namespace Game
         /// <returns></returns>
         public long GetUniqueID(int type, int seq = 1)
         {
-            /*var collection = GetCollection();
+            var collection = GetCollection();
 
             FilterDefinition<YFUniqueEntity> eq = Builders<YFUniqueEntity>.Filter.Eq(t => t.Type, type);
             UpdateDefinition<YFUniqueEntity> inc = Builders<YFUniqueEntity>.Update.Inc(t => t.CurrId, seq);
 
             //FindOneAndUpdateOptions<TDocument, TProjection> options = null
             
-            YFUniqueEntity cc = m_Collection.FindOneAndUpdate<YFUniqueEntity>(eq, inc,options);*/
+            //YFUniqueEntity cc = m_Collection.FindOneAndUpdate<YFUniqueEntity>(eq, inc,options);
 
             return 0;
         }
