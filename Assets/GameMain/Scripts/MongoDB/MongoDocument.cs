@@ -6,24 +6,39 @@ namespace Game
     /// <summary>
     /// Mongo文件 基类
     /// </summary>
-    public class MongoDocument : BsonDocument ,IMongoDocument ,IReference
+    public abstract class MongoDocument :  IMongoDocument ,IReference
     {
         private ObjectId m_Id;
+
+        protected MongoDocument()
+        {
+            m_Id = ObjectId.Empty;
+        }
         
-        public ObjectId Id
+        /// <summary>
+        /// 数据库唯一标识
+        /// </summary>
+        public ObjectId ObjectId
         {
             get
             {
+                if (m_Id == ObjectId.Empty)
+                {
+                    m_Id = ObjectId.GenerateNewId();
+                }
                 return m_Id;
             }
         }
 
-        public MongoDocument()
+        public long Id
         {
-            m_Id = ObjectId.GenerateNewId();
+            get;
         }
 
-        public override void Clear()
+        /// <summary>
+        /// 回收
+        /// </summary>
+        public virtual void Clear()
         {
             m_Id = ObjectId.Empty;
         }

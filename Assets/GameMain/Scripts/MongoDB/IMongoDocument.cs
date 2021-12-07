@@ -2,8 +2,16 @@
 
 namespace Game
 {
-    interface IMongoDocument
+    public interface IMongoDocument
     {
-        ObjectId Id { get;}
+        ObjectId ObjectId
+        {
+            get;
+        }
+
+        long Id
+        {
+            get;
+        }
     }
 }
