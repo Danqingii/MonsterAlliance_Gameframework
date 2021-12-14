@@ -1,4 +1,5 @@
 ﻿using GameFramework;
+using UnityEngine;
 
 namespace Game
 {
@@ -55,6 +56,18 @@ namespace Game
         public static string GetUISoundAsset(string assetName)
         {
             return Utility.Text.Format("Assets/GameMain/UI/UISounds/{0}.wav", assetName);
+        }
+        
+        public static string GetLuaScriptAsset(string assetName)
+        {
+            if (GameEntry.Base.EditorResourceMode)
+            {
+                return Utility.Text.Format("{0}/GameMain/Scripts/LuaScripts/{1}.lua",Application.dataPath, assetName);
+            }
+            else
+            {
+                return Utility.Text.Format("Assets/GameMain/Scripts/LuaScripts/{0}.lua.bytes", assetName);
+            }
         }
     }
 }

@@ -19,7 +19,10 @@ namespace Game
             private set;
         }
 
-        public static LuaComponent Xlua;
+        /// <summary>
+        /// 自定义 xLau模块
+        /// </summary>
+        public static LuaComponent Lua;
 
         /// <summary>
         /// 初始化自定义组件
@@ -28,7 +31,7 @@ namespace Game
         {
             TcpNetwork = UnityGameFramework.Runtime.GameEntry.GetComponent<TcpNetworkComponent>();
             Server = UnityGameFramework.Runtime.GameEntry.GetComponent<ServerComponent>();
-            //Xlua = UnityGameFramework.Runtime.GameEntry.GetComponent<LuaComponent>();
+            Lua = UnityGameFramework.Runtime.GameEntry.GetComponent<LuaComponent>();
             //TcpNetwork.StartConnect();
             
             Server.Init("127.0.0.1",17779);

@@ -5,6 +5,9 @@ using UnityGameFramework.Runtime;
 
 namespace Game
 {
+    /// <summary>
+    /// 展示流程
+    /// </summary>
     public class ProcedureSplash:ProcedureBase
     {
         public override bool UseNativeDialog

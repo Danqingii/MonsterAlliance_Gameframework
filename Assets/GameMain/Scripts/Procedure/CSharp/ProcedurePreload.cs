@@ -36,6 +36,8 @@ namespace Game
             GameEntry.Event.Subscribe(LoadDataTableFailureEventArgs.EventId, OnLoadDataTableFailure);
             GameEntry.Event.Subscribe(LoadDictionarySuccessEventArgs.EventId, OnLoadDictionarySuccess);
             GameEntry.Event.Subscribe(LoadDictionaryFailureEventArgs.EventId, OnLoadDictionaryFailure);
+            GameEntry.Event.Subscribe(LoadLuaScriptSuccessEventArgs.EventId, OnLoadLuaScriptSuccess);
+            GameEntry.Event.Subscribe(LoadLuaScriptFailureEventArgs.EventId, OnLoadLuaScriptFailure);
             
             m_LoadedFlag.Clear();
             
@@ -51,6 +53,9 @@ namespace Game
             GameEntry.Event.Unsubscribe(LoadDataTableFailureEventArgs.EventId, OnLoadDataTableFailure);
             GameEntry.Event.Unsubscribe(LoadDictionarySuccessEventArgs.EventId, OnLoadDictionarySuccess);
             GameEntry.Event.Unsubscribe(LoadDictionaryFailureEventArgs.EventId, OnLoadDictionaryFailure);
+            GameEntry.Event.Unsubscribe(LoadLuaScriptSuccessEventArgs.EventId, OnLoadLuaScriptSuccess);
+            GameEntry.Event.Unsubscribe(LoadLuaScriptFailureEventArgs.EventId, OnLoadLuaScriptFailure);
+            GameEntry.Lua.StartVM();
             
             base.OnLeave(procedureOwner, isShutdown);
         }
@@ -67,10 +72,14 @@ namespace Game
                 }
             }
             
+            /*
             //预加载结束 开始调整场景
             procedureOwner.SetData<VarInt32>("NextSceneId", GameEntry.Config.GetInt("Scene.Main"));
             procedureOwner.SetData<VarString>("NextProcedure",typeof(ProcedureLogin).FullName);
             ChangeState<ProcedureChangeScene>(procedureOwner);
+            */
+
+            ChangeState<ProedureTest>(procedureOwner);
         }
 
         private void PreloadResources()
@@ -90,6 +99,11 @@ namespace Game
             //加载字体
             //LoadFont();
             
+            //加载lua脚本
+            LoadLuaScript("LauMain");
+            LoadLuaScript("LuaEntry");
+            
+            LoadLuaScript("Procedure/ProcedureTest");
         }
         
         private void LoadConfig(string configName)
@@ -112,6 +126,12 @@ namespace Game
             m_LoadedFlag.Add(dictionaryAssetName, false);
             Log.Info(dictionaryAssetName);
             GameEntry.Localization.ReadData(dictionaryAssetName, this);
+        }
+        
+        private void LoadLuaScript(string luaScriptName)
+        {
+            m_LoadedFlag.Add(Utility.Text.Format("LuaScript.{0}", luaScriptName), false);
+            GameEntry.Lua.LoadScript(luaScriptName, this);
         }
         
         private void LoadFont(string fontName)
@@ -199,6 +219,30 @@ namespace Game
             }
 
             Log.Error("Can not load dictionary '{0}' from '{1}' with error message '{2}'.", ne.DictionaryAssetName, ne.DictionaryAssetName, ne.ErrorMessage);
+        }
+        
+        private void OnLoadLuaScriptSuccess(object sender, GameEventArgs e)
+        {
+            LoadLuaScriptSuccessEventArgs ne = (LoadLuaScriptSuccessEventArgs)e;
+            if (ne.UserData != this)
+            {
+                return;
+            }
+
+            //TODO 这里有点问题
+            m_LoadedFlag[Utility.Text.Format("LuaScript.{0}", ne.LuaScriptName)] = true;
+            Log.Info("Load lua script '{0}' OK.", ne.LuaScriptName);
+        }
+
+        private void OnLoadLuaScriptFailure(object sender, GameEventArgs e)
+        {
+            LoadLuaScriptFailureEventArgs ne = (LoadLuaScriptFailureEventArgs)e;
+            if (ne.UserData != this)
+            {
+                return;
+            }
+
+            Log.Error("Can not load lua script '{0}' from '{1}' with error message '{2}'.", ne.LuaScriptName, ne.LuaScriptAssetName, ne.ErrorMessage);
         }
     }
 }
