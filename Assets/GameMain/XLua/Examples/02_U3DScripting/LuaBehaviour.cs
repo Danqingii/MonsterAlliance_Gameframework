@@ -48,7 +48,7 @@ namespace XLuaTest
             meta.Dispose();
 
             scriptEnv.Set("self", this);
-            foreach (var injection in injections)
+            foreach (var injection in injections) //赋值 给到Lua那边
             {
                 scriptEnv.Set(injection.name, injection.value);
             }

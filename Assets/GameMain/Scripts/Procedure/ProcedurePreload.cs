@@ -55,8 +55,7 @@ namespace Game
             GameEntry.Event.Unsubscribe(LoadDictionaryFailureEventArgs.EventId, OnLoadDictionaryFailure);
             GameEntry.Event.Unsubscribe(LoadLuaScriptSuccessEventArgs.EventId, OnLoadLuaScriptSuccess);
             GameEntry.Event.Unsubscribe(LoadLuaScriptFailureEventArgs.EventId, OnLoadLuaScriptFailure);
-            GameEntry.Lua.StartVM();
-            
+
             base.OnLeave(procedureOwner, isShutdown);
         }
 
@@ -71,15 +70,17 @@ namespace Game
                     return;
                 }
             }
+
+            //预加载结束 开始Lua虚拟机
+            GameEntry.Lua.StartVirtualMachine();
             
-            /*
             //预加载结束 开始调整场景
             procedureOwner.SetData<VarInt32>("NextSceneId", GameEntry.Config.GetInt("Scene.Main"));
             procedureOwner.SetData<VarString>("NextProcedure",typeof(ProcedureLogin).FullName);
             ChangeState<ProcedureChangeScene>(procedureOwner);
-            */
 
-            ChangeState<ProedureTest>(procedureOwner);
+            //测试流程
+            //ChangeState<ProedureTest>(procedureOwner);
         }
 
         private void PreloadResources()
@@ -99,11 +100,12 @@ namespace Game
             //加载字体
             //LoadFont();
             
-            //加载lua脚本
-            LoadLuaScript("LauMain");
+            //加载lua脚本 可以加载很多  把一些比较大的Lua脚本给一次性加载完成 
+            LoadLuaScript("LuaMain");
             LoadLuaScript("LuaEntry");
+            LoadLuaScript("LuaDefault");
             
-            LoadLuaScript("Procedure/ProcedureTest");
+            LoadLuaScript("LuaEntry");
         }
         
         private void LoadConfig(string configName)
@@ -130,8 +132,8 @@ namespace Game
         
         private void LoadLuaScript(string luaScriptName)
         {
-            m_LoadedFlag.Add(Utility.Text.Format("LuaScript.{0}", luaScriptName), false);
-            GameEntry.Lua.LoadScript(luaScriptName, this);
+            m_LoadedFlag.Add(string.Format("LuaScript.{0}", luaScriptName), false);
+            GameEntry.Lua.LoadLuaScript(luaScriptName, this);
         }
         
         private void LoadFont(string fontName)

@@ -6,8 +6,11 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 */
 
+using System;
 using UnityEngine;
 using System.Collections;
+using System.IO;
+using Game;
 using XLua;
 
 namespace Tutorial
@@ -19,18 +22,28 @@ namespace Tutorial
         void Start()
         {
             luaenv = new LuaEnv();
-            luaenv.AddLoader((ref string filename) =>
-            {
-                if (filename == "InMemory")
-                {
-                    string script = "return {ccc = 9999}";
-                    return System.Text.Encoding.UTF8.GetBytes(script);
-                }
-                return null;
-            });
-            luaenv.DoString("print('InMemory.ccc=', require('InMemory').ccc)");
+
+            luaenv.AddLoader(CustomLuaLoader);
+            luaenv.DoString("require 'LuaMain'"); //Dostring 内部已经处理 require了 只会返回 luamain
+
+            luaenv.Global.Get<Action>("OnInit").Invoke();
         }
 
+        private byte[] CustomLuaLoader(ref string fileName)
+        {
+            //TODO
+            string script = $"Assets/GameMain/Scripts/LuaScripts/{fileName}.lua";
+
+            byte[] bytes = File.ReadAllBytes(script);
+            
+            if (bytes[0] == 239 && bytes[1] == 187 && bytes[2] == 191)
+            {
+                // 处理UFT-8 BOM头
+                bytes[0] = bytes[1] = bytes[2] = 32;
+            }
+            return bytes;
+        }
+        
         // Update is called once per frame
         void Update()
         {

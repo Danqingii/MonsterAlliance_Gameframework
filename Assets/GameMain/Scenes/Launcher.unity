@@ -930,7 +930,7 @@ PrefabInstance:
     - target: {fileID: 3112374761771364027, guid: cab60976bf3ad3a458b5b794491d44d2,
         type: 3}
       propertyPath: m_EntranceProcedureTypeName
-      value: Game.ProcedureTestNetwork
+      value: Game.ProcedureLaunch
       objectReference: {fileID: 0}
     - target: {fileID: 3112374761771364027, guid: cab60976bf3ad3a458b5b794491d44d2,
         type: 3}

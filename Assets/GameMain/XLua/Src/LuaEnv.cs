@@ -363,6 +363,7 @@ namespace XLua
             Tick();
         }
 
+        //应该是new一个新表
         public LuaTable NewTable()
         {
 #if THREAD_SAFE || HOTFIX_ENABLE

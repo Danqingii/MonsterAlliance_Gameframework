@@ -7,17 +7,17 @@
 require "LuaEntry"
 
 function OnStart()
-    LuaEntry.OnStart();
+    LuaEntry.OnStart()
 end
 
 function OnUpdate(deltaTime, unscaledDeltaTime)
-    LuaEntry.OnUpdate(deltaTime, unscaledDeltaTime);
+    LuaEntry.OnUpdate(deltaTime,unscaledDeltaTime)
 end
 
 function OnFixedUpdate(deltaTime, unscaledDeltaTime)
-    LuaEntry.OnFixedUpdate(deltaTime, unscaledDeltaTime);
+    LuaEntry.OnFixedUpdate(deltaTime,unscaledDeltaTime)
 end
 
 function OnDestroy()
-    LuaEntry.OnDestroy();
+    LuaEntry.OnDestroy()
 end

@@ -334,6 +334,7 @@ namespace XLua
             return ret;
         }
 
+        //设置元表
         public void SetMetaTable(LuaTable metaTable)
         {
 #if THREAD_SAFE || HOTFIX_ENABLE
