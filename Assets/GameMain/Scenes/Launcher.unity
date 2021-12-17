@@ -970,7 +970,7 @@ PrefabInstance:
     - target: {fileID: 3112374761771364027, guid: cab60976bf3ad3a458b5b794491d44d2,
         type: 3}
       propertyPath: m_AvailableProcedureTypeNames.Array.data[6]
-      value: Game.ProedureTest
+      value: Game.ProedureLua
       objectReference: {fileID: 0}
     - target: {fileID: 3112374762539335409, guid: cab60976bf3ad3a458b5b794491d44d2,
         type: 3}
@@ -1035,6 +1035,11 @@ PrefabInstance:
     - target: {fileID: 3112374763447652194, guid: cab60976bf3ad3a458b5b794491d44d2,
         type: 3}
       propertyPath: m_GameSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3112374763447652194, guid: cab60976bf3ad3a458b5b794491d44d2,
+        type: 3}
+      propertyPath: m_EditorResourceMode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3112374763447652194, guid: cab60976bf3ad3a458b5b794491d44d2,

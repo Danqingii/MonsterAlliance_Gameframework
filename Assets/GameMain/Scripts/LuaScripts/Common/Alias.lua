@@ -7,13 +7,13 @@
 --加载程序集
 --全局的程序集
 
-GF = CS.GameFramework
-UGF = CS.UnityGameFramework.Runtime
+GameFramework = CS.GameFramework
+UnityGameFramework = CS.UnityGameFramework.Runtime
 Game = CS.Game
 
-Log = GF.Log
-ReferencePool = GF.ReferencePool
-Utility = GF.Utility
+Log = GameFramework.Log
+ReferencePool = GameFramework.ReferencePool
+Utility = GameFramework.Utility
 GameEntry = Game.GameEntry
 
 LuaHelper = Game.LuaHelper

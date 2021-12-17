@@ -103,9 +103,9 @@ namespace Game
             //加载lua脚本 可以加载很多  把一些比较大的Lua脚本给一次性加载完成 
             LoadLuaScript("LuaMain");
             LoadLuaScript("LuaEntry");
+            LoadLuaScript("LuaConfig");
             LoadLuaScript("LuaDefault");
             
-            LoadLuaScript("LuaEntry");
         }
         
         private void LoadConfig(string configName)

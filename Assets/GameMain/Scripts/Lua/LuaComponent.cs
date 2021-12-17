@@ -209,6 +209,7 @@ namespace Game
             GameEntry.Event.Fire(this, ReferencePool.Acquire<LoadLuaScriptSuccessEventArgs>().Fill(luaScriptName, luaScriptAssetName, duration, userData));
         }
 
+        
         //加载Lua脚本成功回调 会把成功的Lua脚本缓存添加进入缓存器中
         private void LoadLuaScriptSuccessCallback(string luaScriptAssetName, object asset, float duration, object userData)
         {
@@ -231,8 +232,7 @@ namespace Game
             string appendErrorMessage = Utility.Text.Format("Load lua script failure, asset name '{0}', status '{1}', error message '{2}'.", luaScriptAssetName, status.ToString(), errorMessage);
             GameEntry.Event.Fire(this, ReferencePool.Acquire<LoadLuaScriptFailureEventArgs>().Fill(luaScriptInfo.LuaScriptName, luaScriptAssetName, appendErrorMessage, luaScriptInfo.UserData));
         }
-        
-        
+
 #if UNITY_EDITOR
         /// <summary>
         /// 重新加载指定的Lua脚本,只在编辑器状态下可用
@@ -253,5 +253,6 @@ namespace Game
             }
         }
 #endif
+
     }
 }

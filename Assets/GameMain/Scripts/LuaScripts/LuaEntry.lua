@@ -12,7 +12,6 @@ LuaEntry = {}
 function LuaEntry.OnStart()
    
    require "LuaConfig"
-
    --加载热更新
 end
 
