@@ -19,7 +19,7 @@ namespace GameFramework.Resource
         private sealed class ResourceIniter
         {
             private readonly ResourceManager m_ResourceManager;
-            private readonly Dictionary<ResourceName, string> m_CachedFileSystemNames;
+            private readonly Dictionary<ResourceName, string> m_CachedFileSystemNames;  
             private string m_CurrentVariant;
 
             public GameFrameworkAction ResourceInitComplete;
@@ -61,6 +61,7 @@ namespace GameFramework.Resource
                     throw new GameFrameworkException("Read-only path is invalid.");
                 }
 
+                //会在
                 m_ResourceManager.m_ResourceHelper.LoadBytes(Utility.Path.GetRemotePath(Path.Combine(m_ResourceManager.m_ReadOnlyPath, RemoteVersionListFileName)), new LoadBytesCallbacks(OnLoadPackageVersionListSuccess, OnLoadPackageVersionListFailure), null);
             }
 

@@ -17,10 +17,10 @@ namespace GameFramework.Resource
         private sealed class ResourceGroup : IResourceGroup
         {
             private readonly string m_Name;
-            private readonly Dictionary<ResourceName, ResourceInfo> m_ResourceInfos;
+            private readonly Dictionary<ResourceName, ResourceInfo> m_ResourceInfos;  //每个资源组都存在着一个资源引用的一个缓存
             private readonly HashSet<ResourceName> m_ResourceNames;
-            private long m_TotalLength;
-            private long m_TotalCompressedLength;
+            private long m_TotalLength;            //总长度
+            private long m_TotalCompressedLength;  //总解压长度
 
             /// <summary>
             /// 初始化资源组的新实例。
@@ -57,6 +57,7 @@ namespace GameFramework.Resource
 
             /// <summary>
             /// 获取资源组是否准备完毕。
+            /// 会 for循环每个资源信息 如果资源都准备好了的情况会返回 true
             /// </summary>
             public bool Ready
             {

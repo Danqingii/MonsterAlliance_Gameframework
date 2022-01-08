@@ -69,9 +69,9 @@ namespace GameFramework
             }
 
             m_SerializeCallbacks[version] = callback;
-            if (version > m_LatestSerializeCallbackVersion)
+            if (version > m_LatestSerializeCallbackVersion) //如果序列化回调的版本 > 当前最新的版本
             {
-                m_LatestSerializeCallbackVersion = version;
+                m_LatestSerializeCallbackVersion = version; //把当前版本设置为最新
             }
         }
 
@@ -118,6 +118,7 @@ namespace GameFramework
                 throw new GameFrameworkException("No serialize callback registered.");
             }
 
+            //如果使用该序列化标识用最新的标识
             return Serialize(stream, data, m_LatestSerializeCallbackVersion);
         }
 
@@ -130,8 +131,10 @@ namespace GameFramework
         /// <returns>是否序列化数据成功。</returns>
         public bool Serialize(Stream stream, T data, byte version)
         {
+            //将一个字节写入流内的当前位置
+            
             byte[] header = GetHeader();
-            stream.WriteByte(header[0]);  //将一个字节写入流中的当前位置，并将流中的位置提前一个字节
+            stream.WriteByte(header[0]);
             stream.WriteByte(header[1]);
             stream.WriteByte(header[2]);
             stream.WriteByte(version);

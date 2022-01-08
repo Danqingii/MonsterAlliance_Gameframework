@@ -14,14 +14,14 @@ namespace GameFramework.Resource
         /// </summary>
         private sealed class ResourceInfo
         {
-            private readonly ResourceName m_ResourceName;
-            private readonly string m_FileSystemName;
-            private readonly LoadType m_LoadType;
-            private readonly int m_Length;
-            private readonly int m_HashCode;
-            private readonly int m_CompressedLength;
-            private readonly bool m_StorageInReadOnly;
-            private bool m_Ready;
+            private readonly ResourceName m_ResourceName;  //资源名字
+            private readonly string m_FileSystemName;      //文件系统的名称
+            private readonly LoadType m_LoadType;          //资源加载的方式
+            private readonly int m_Length;                 //资源大小
+            private readonly int m_HashCode;               //资源的哈希值
+            private readonly int m_CompressedLength;       //压缩后资源大小
+            private readonly bool m_StorageInReadOnly;     //资源是否在只读区
+            private bool m_Ready;                          //资源是否准备完毕
 
             /// <summary>
             /// 初始化资源信息的新实例。

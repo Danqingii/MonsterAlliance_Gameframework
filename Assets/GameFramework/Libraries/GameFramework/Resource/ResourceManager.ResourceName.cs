@@ -14,6 +14,7 @@ namespace GameFramework.Resource
     {
         /// <summary>
         /// 资源名称。
+        /// [StructLayout(LayoutKind.Auto)] 无法被托管
         /// </summary>
         [StructLayout(LayoutKind.Auto)]
         private struct ResourceName : IComparable, IComparable<ResourceName>, IEquatable<ResourceName>
@@ -86,7 +87,9 @@ namespace GameFramework.Resource
                 {
                     if (m_CachedFullName == null)
                     {
-                        m_CachedFullName = m_Variant != null ? Utility.Text.Format("{0}.{1}.{2}", m_Name, m_Variant, m_Extension) : Utility.Text.Format("{0}.{1}", m_Name, m_Extension);
+                        m_CachedFullName = m_Variant != null ? 
+                            Utility.Text.Format("{0}.{1}.{2}", m_Name, m_Variant, m_Extension) :
+                            Utility.Text.Format("{0}.{1}", m_Name, m_Extension);
                     }
 
                     return m_CachedFullName;

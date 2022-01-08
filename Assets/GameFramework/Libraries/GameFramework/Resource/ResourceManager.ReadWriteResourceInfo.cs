@@ -11,6 +11,9 @@ namespace GameFramework.Resource
 {
     internal sealed partial class ResourceManager : GameFrameworkModule, IResourceManager
     {
+        /// <summary>
+        /// 可读写的资源数据.
+        /// </summary>
         [StructLayout(LayoutKind.Auto)]
         private struct ReadWriteResourceInfo
         {
@@ -19,6 +22,13 @@ namespace GameFramework.Resource
             private readonly int m_Length;
             private readonly int m_HashCode;
 
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="fileSystemName">文件流名字</param>
+            /// <param name="loadType">加载类型</param>
+            /// <param name="length">资源长度</param>
+            /// <param name="hashCode">哈希值</param>
             public ReadWriteResourceInfo(string fileSystemName, LoadType loadType, int length, int hashCode)
             {
                 m_FileSystemName = fileSystemName;

@@ -19,43 +19,43 @@ namespace GameFramework.Resource
     /// </summary>
     internal sealed partial class ResourceManager : GameFrameworkModule, IResourceManager
     {
-        private const string RemoteVersionListFileName = "GameFrameworkVersion.dat";
-        private const string LocalVersionListFileName = "GameFrameworkList.dat";
+        private const string RemoteVersionListFileName = "GameFrameworkVersion.dat"; //片元的型号.dat
+        private const string LocalVersionListFileName = "GameFrameworkList.dat";     //本地的型号.dat
         private const string DefaultExtension = "dat";
         private const string TempExtension = "tmp";
-        private const int FileSystemMaxFileCount = 1024 * 16;
-        private const int FileSystemMaxBlockCount = 1024 * 256;
+        private const int FileSystemMaxFileCount = 1024 * 16;    //文件系统流的最大数
+        private const int FileSystemMaxBlockCount = 1024 * 256;  //文件系统流大块数量
 
-        private Dictionary<string, AssetInfo> m_AssetInfos;
-        private Dictionary<ResourceName, ResourceInfo> m_ResourceInfos;
-        private SortedDictionary<ResourceName, ReadWriteResourceInfo> m_ReadWriteResourceInfos;
-        private readonly Dictionary<string, IFileSystem> m_ReadOnlyFileSystems;
-        private readonly Dictionary<string, IFileSystem> m_ReadWriteFileSystems;
-        private readonly Dictionary<string, ResourceGroup> m_ResourceGroups;
+        private Dictionary<string, AssetInfo> m_AssetInfos;                //所有的资源信息 资源信息=具体的资源名,所在的资源名称,资源依赖
+        private Dictionary<ResourceName, ResourceInfo> m_ResourceInfos;    //所有Resource资源 
+        private SortedDictionary<ResourceName, ReadWriteResourceInfo> m_ReadWriteResourceInfos;  //二叉搜索树字典--可读写资源数据
+        private readonly Dictionary<string, IFileSystem> m_ReadOnlyFileSystems;         //只读系统流           
+        private readonly Dictionary<string, IFileSystem> m_ReadWriteFileSystems;        //可读写的系统流
+        private readonly Dictionary<string, ResourceGroup> m_ResourceGroups;            //具体的资源组
 
-        private PackageVersionListSerializer m_PackageVersionListSerializer;
-        private UpdatableVersionListSerializer m_UpdatableVersionListSerializer;
-        private ReadOnlyVersionListSerializer m_ReadOnlyVersionListSerializer;
-        private ReadWriteVersionListSerializer m_ReadWriteVersionListSerializer;
-        private ResourcePackVersionListSerializer m_ResourcePackVersionListSerializer;
+        private PackageVersionListSerializer m_PackageVersionListSerializer;            //单机模式版本资源列表序列化器。
+        private UpdatableVersionListSerializer m_UpdatableVersionListSerializer;        //可更新模式版本资源列表序列化器。
+        private ReadOnlyVersionListSerializer m_ReadOnlyVersionListSerializer;          //本地只读区版本资源列表序列化器。
+        private ReadWriteVersionListSerializer m_ReadWriteVersionListSerializer;        //本地读写区版本资源列表序列化器。
+        private ResourcePackVersionListSerializer m_ResourcePackVersionListSerializer;  //资源包版本资源列表序列化器。
 
-        private IFileSystemManager m_FileSystemManager;
-        private ResourceIniter m_ResourceIniter;
-        private VersionListProcessor m_VersionListProcessor;
+        private IFileSystemManager m_FileSystemManager;      //FSM 文件系统管理器
+        private ResourceIniter m_ResourceIniter;             //资源初始化器  会在初始化的时候注册序列化器  还会在里面缓存文件流的名字
+        private VersionListProcessor m_VersionListProcessor; //版本资源列表处理器  检查资源  更新资源
         private ResourceChecker m_ResourceChecker;
         private ResourceUpdater m_ResourceUpdater;
         private ResourceLoader m_ResourceLoader;
-        private IResourceHelper m_ResourceHelper;
+        private IResourceHelper m_ResourceHelper;            //资源辅助器
 
-        private string m_ReadOnlyPath;
-        private string m_ReadWritePath;
-        private ResourceMode m_ResourceMode;
-        private bool m_RefuseSetFlag;
-        private string m_CurrentVariant;
-        private string m_UpdatePrefixUri;
-        private string m_ApplicableGameVersion;
-        private int m_InternalResourceVersion;
-        private MemoryStream m_DecompressCachedStream;
+        private string m_ReadOnlyPath;                       //资源只读区路径
+        private string m_ReadWritePath;                      //资源读写区路径
+        private ResourceMode m_ResourceMode;                 //资源模式
+        private bool m_RefuseSetFlag;                        //拒绝设置标识
+        private string m_CurrentVariant;                     //当前变体
+        private string m_UpdatePrefixUri;                    //更新资源的下载地址
+        private string m_ApplicableGameVersion;              //资源适用的游戏版本号
+        private int m_InternalResourceVersion;               //内部资源版本号
+        private MemoryStream m_DecompressCachedStream;       //解压缓存流
         private DecryptResourceCallback m_DecryptResourceCallback;
         private InitResourcesCompleteCallback m_InitResourcesCompleteCallback;
         private UpdateVersionListCallbacks m_UpdateVersionListCallbacks;
