@@ -57,6 +57,11 @@ namespace Game
         {
             return Utility.Text.Format("Assets/GameMain/UI/UISounds/{0}.wav", assetName);
         }
+
+        public static string GetLuaScriptNameConfig()
+        {
+            return "Assets/GameMain/Configs/LuaScriptNameConfig.json";
+        }
         
         public static string GetLuaScriptAsset(string assetName)
         {

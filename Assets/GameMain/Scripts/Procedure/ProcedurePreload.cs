@@ -4,12 +4,14 @@ using GameFramework.Event;
 using GameFramework.Fsm;
 using GameFramework.Procedure;
 using GameFramework.Resource;
+using UnityEngine;
 using UnityGameFramework.Runtime;
 
 namespace Game
 {
     public class ProcedurePreload:ProcedureBase
     {
+        //配置表 最好也是可更新的
         public static readonly string[] DataTableNames = new string[]
         {
             "UIForm",
@@ -25,6 +27,7 @@ namespace Game
         }
         
         private Dictionary<string, bool> m_LoadedFlag = new Dictionary<string, bool>();
+        private bool m_LoadLuaConfig = false;
 
         protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
         {
@@ -56,6 +59,9 @@ namespace Game
             GameEntry.Event.Unsubscribe(LoadLuaScriptSuccessEventArgs.EventId, OnLoadLuaScriptSuccess);
             GameEntry.Event.Unsubscribe(LoadLuaScriptFailureEventArgs.EventId, OnLoadLuaScriptFailure);
 
+            m_LoadedFlag.Clear();
+            m_LoadedFlag = null;
+            m_LoadLuaConfig = false;
             base.OnLeave(procedureOwner, isShutdown);
         }
 
@@ -63,24 +69,30 @@ namespace Game
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
 
-            foreach (var state in m_LoadedFlag)
+            if (!m_LoadLuaConfig)
             {
-                if (!state.Value)
+                return;
+            }
+            
+            foreach (var flag in m_LoadedFlag)
+            {
+                if (!flag.Value)
                 {
                     return;
                 }
             }
 
-            //预加载结束 开始Lua虚拟机
+            //预加载结束 开始执行Lua虚拟机
             GameEntry.Lua.StartVirtualMachine();
             
-            //预加载结束 开始调整场景
-            procedureOwner.SetData<VarInt32>("NextSceneId", GameEntry.Config.GetInt("Scene.Main"));
-            procedureOwner.SetData<VarString>("NextProcedure",typeof(ProcedureLogin).FullName);
-            ChangeState<ProcedureChangeScene>(procedureOwner);
+            //等待Lua虚拟机开启完毕  进入Lua进行流程接管
+            ProcedureLua procedureLua = (ProcedureLua)GameEntry.Procedure.GetProcedure<ProcedureLua>();
+            procedureLua.ChangeProcedureLua("Procedure/ProcedureEntry", "ProcedureEntry");
 
-            //测试流程
-            //ChangeState<ProedureTest>(procedureOwner);
+            //预加载结束 开始调整场景
+            //procedureOwner.SetData<VarInt32>("NextSceneId", GameEntry.Config.GetInt("Scene.Main"));
+            //procedureOwner.SetData<VarString>("NextProcedure",typeof(ProcedureLogin).FullName);
+            //ChangeState<ProcedureChangeScene>(procedureOwner);
         }
 
         private void PreloadResources()
@@ -100,12 +112,8 @@ namespace Game
             //加载字体
             //LoadFont();
             
-            //加载lua脚本 可以加载很多  把一些比较大的Lua脚本给一次性加载完成 
-            LoadLuaScript("LuaMain");
-            LoadLuaScript("LuaEntry");
-            LoadLuaScript("LuaConfig");
-            LoadLuaScript("LuaDefault");
-            
+            //加载lua脚本 可以加载很多 把lua脚本一次性加载完
+            LoadLuaScript();
         }
         
         private void LoadConfig(string configName)
@@ -130,10 +138,27 @@ namespace Game
             GameEntry.Localization.ReadData(dictionaryAssetName, this);
         }
         
-        private void LoadLuaScript(string luaScriptName)
+        private void LoadLuaScript()
         {
-            m_LoadedFlag.Add(string.Format("LuaScript.{0}", luaScriptName), false);
-            GameEntry.Lua.LoadLuaScript(luaScriptName, this);
+            //先加载一下配置表 通过lua配置表 才真正的加载lua脚本
+            GameEntry.Resource.LoadAsset(AssetUtility.GetLuaScriptNameConfig(), new LoadAssetCallbacks(
+                (assetName, asset, duration, userData) =>
+                {
+                     string[] luaScriptNames = Utility.Json.ToObject<string[]>(((TextAsset)asset).text);
+                  
+                     for (int i = 0; i < luaScriptNames.Length; i++)
+                     {
+                         m_LoadedFlag.Add(luaScriptNames[i],false);
+                         GameEntry.Lua.LoadLuaScript(luaScriptNames[i], this);
+                     }
+                     
+                     m_LoadLuaConfig = true;
+                },
+
+                (assetName, status, errorMessage, userData) =>
+                {
+                    Log.Error("LuaScriptNameConfig 加载失败 路径: '{0}'.", AssetUtility.GetLuaScriptNameConfig());
+                }));
         }
         
         private void LoadFont(string fontName)
@@ -231,8 +256,7 @@ namespace Game
                 return;
             }
 
-            //TODO 这里有点问题
-            m_LoadedFlag[Utility.Text.Format("LuaScript.{0}", ne.LuaScriptName)] = true;
+            m_LoadedFlag[ne.LuaScriptName] = true;
             Log.Info("Load lua script '{0}' OK.", ne.LuaScriptName);
         }
 

@@ -221,7 +221,7 @@ namespace GameFramework.UI
                 m_InstancePool.Unspawn(uiForm.Handle);
             }
 
-            //轮询所有的组成员
+            //轮询所有的组成员 组是分开的
             foreach (KeyValuePair<string, UIGroup> uiGroup in m_UIGroups)
             {
                 uiGroup.Value.Update(elapseSeconds, realElapseSeconds);
@@ -756,6 +756,7 @@ namespace GameFramework.UI
             int serialId = ++m_Serial;
             UIFormInstanceObject uiFormInstanceObject = m_InstancePool.Spawn(uiFormAssetName);  
             
+            //UI打开的时候  会尝试从池中获取一下
             //从池中尝试获取实例 如果失败 去创建一个实例
             if (uiFormInstanceObject == null)
             {
@@ -956,7 +957,7 @@ namespace GameFramework.UI
                     throw new GameFrameworkException("Can not create UI form in UI form helper.");
                 }
 
-                //具体的实现组 初始化Form添加进入Griup 然后打开 最后刷新Group
+                //具体的实现组 初始化Form添加进入Group 然后打开 最后刷新Group
                 uiForm.OnInit(serialId, uiFormAssetName, uiGroup, pauseCoveredUIForm, isNewInstance, userData);
                 uiGroup.AddUIForm(uiForm);
                 uiForm.OnOpen(userData);

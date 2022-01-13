@@ -97,6 +97,10 @@ public partial class ServerComponent : GameFrameworkComponent
           m_ClientSocket?.Close();
           m_ServerSocket?.Close();
           m_ReceiveTherad?.Abort();
+
+          m_ClientSocket = null;
+          m_ServerSocket = null;
+          m_ReceiveTherad = null;
      }
 
      public void Init(string ip,int port)
@@ -105,7 +109,7 @@ public partial class ServerComponent : GameFrameworkComponent
 
           m_ServerSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
           m_ServerSocket.Bind(new IPEndPoint(IPAddress.Parse(ip), port));
-          m_ServerSocket.Listen(1);
+          m_ServerSocket.Listen(10);
           
           m_ReceiveTherad = new Thread(ListenClientCallBack);
           m_ReceiveTherad.IsBackground = true;

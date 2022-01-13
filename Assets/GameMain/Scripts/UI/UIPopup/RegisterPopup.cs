@@ -21,7 +21,6 @@ namespace Game
             m_UserNameField = transform.GetComponent<TMP_InputField>("InputField_UserName");
             m_PasswordField = transform.GetComponent<TMP_InputField>("InputField_Password");
             
-            
             m_ClosePopup.onClick.AddListener(OnClosePopupClick);
             m_ConfirmRegisterBtn.onClick.AddListener(OnRegisterClick);
         }

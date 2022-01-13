@@ -22,7 +22,7 @@ namespace Game
         private Canvas m_CachedCanvas = null;
         private CanvasGroup m_CanvasGroup = null;
         private List<Canvas> m_CachedCanvasContainer = new List<Canvas>();
-
+        
         public int OriginalDepth
         {
             get;
@@ -86,11 +86,11 @@ namespace Game
 
             m_CanvasGroup = gameObject.GetOrAddComponent<CanvasGroup>();
 
-            RectTransform transform = GetComponent<RectTransform>();
-            transform.anchorMin = Vector2.zero;
-            transform.anchorMax = Vector2.one;
-            transform.anchoredPosition = Vector2.zero;
-            transform.sizeDelta = Vector2.zero;
+            RectTransform rtf = GetComponent<RectTransform>();
+            rtf.anchorMin = Vector2.zero;
+            rtf.anchorMax = Vector2.one;
+            rtf.anchoredPosition = Vector2.zero;
+            rtf.sizeDelta = Vector2.zero;
 
             gameObject.GetOrAddComponent<GraphicRaycaster>();
 

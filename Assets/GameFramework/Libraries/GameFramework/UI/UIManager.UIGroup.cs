@@ -146,6 +146,7 @@ namespace GameFramework.UI
                 LinkedListNode<UIFormInfo> current = m_UIFormInfos.First;
                 while (current != null)
                 {
+                    //如果是同组中 需要暂停的才停止轮询
                     if (current.Value.Paused)
                     {
                         break;

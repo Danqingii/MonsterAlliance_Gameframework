@@ -4,3 +4,18 @@
 --- DateTime: 2021/12/16 15:58
 ---
 
+function OnStart()
+    LuaEntry.OnStart()
+end
+
+function OnUpdate(deltaTime, unscaledDeltaTime)
+    LuaEntry.OnUpdate(deltaTime,unscaledDeltaTime)
+end
+
+function OnFixedUpdate(deltaTime, unscaledDeltaTime)
+    LuaEntry.OnFixedUpdate(deltaTime,unscaledDeltaTime)
+end
+
+function OnDestroy()
+    LuaEntry.OnDestroy()
+end

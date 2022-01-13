@@ -383,5 +383,6 @@ public static class UnityExtension
         Log.Error("Child:'{0}' GetComponent'{1}' Error.",childName,typeof(T));
         return null;
     }
+
     #endregion Transform
 }

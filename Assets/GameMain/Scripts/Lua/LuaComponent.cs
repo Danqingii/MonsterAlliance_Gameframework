@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using GameFramework;
 using UnityGameFramework.Runtime;
@@ -11,20 +12,20 @@ namespace Game
     [DisallowMultipleComponent]
     public sealed partial class LuaComponent : GameFrameworkComponent
     {
-        //Lua脚本缓存
+        private static LuaEnv m_LuaEnv;   //Lua唯一虚拟机
+        
+        //lua脚本缓存 只会在预加载流程中进行赋值
         private readonly Dictionary<string, byte[]> m_LuaScriptCache = new Dictionary<string, byte[]>();
         
-        //加载Lua脚本回调 里面有一个加载成功回调  有一个加载失败回调
-        private LoadAssetCallbacks m_LoadAssetCallbacks = null;
+        private LoadAssetCallbacks m_LoadAssetCallbacks;
 
-        private static LuaEnv m_LuaEnv = null;   //Lua虚拟机
-        private LuaTable m_LuaTable = null;      //Lua表
-        private LuaTable m_LuaMetaTable = null;  //Lua元表
+        private LuaTable m_LuaTable;      //Lua表
+        private LuaTable m_LuaMetaTable;  //Lua元表
 
-        private System.Action m_LuaOnStart = null;
-        private System.Action<float, float> m_LuaOnUpdate = null;
-        private System.Action<float, float> m_LuaOnFixedUpdate = null;
-        private System.Action m_LuaOnDestroy = null;
+        private Action m_LuaOnStart;
+        private Action<float, float> m_LuaOnUpdate;
+        private Action<float, float> m_LuaOnFixedUpdate;
+        private Action m_LuaOnDestroy;
 
         private float m_LastGCTime = 0;
         private float m_GCInterval = 1;
@@ -142,14 +143,130 @@ namespace Game
                 return null;
             }
 
-            //如果不存在该Lua脚本 可以直接异常
-            if (!m_LuaScriptCache.TryGetValue(luaScriptName, out var luaScriptBytes))
+            if (m_LuaScriptCache.TryGetValue(luaScriptName,out var cache))
+            {
+                return m_LuaEnv.DoString(cache, chunkName, m_LuaTable);
+            }
+            else
             {
                 Log.Error("Can not find lua script '{0}', please LoadScript first.", luaScriptName);
                 return null;
             }
+        }
+        
+        //核查Lua脚本是否存在
+        public bool CheckLuaScript(string luaScriptName)
+        {
+            return m_LuaScriptCache.ContainsKey(luaScriptName);
+        }
+        
+        //获取全局类的LuaTable
+        public LuaTable GetGlobalLuaTable(string luaScriptName, string luaTableName)
+        {
+            if (m_LuaScriptCache.ContainsKey(luaScriptName))
+            {
+                LuaTable tbale = m_LuaEnv.Global.Get<LuaTable>(luaTableName);
+                if (tbale == null)
+                {
+                    Log.Error("'{0}': Get global table '{1}' failed.",luaScriptName, luaTableName);
+                }
+                return tbale;
+            }
+            Log.Error("Lua script asset '{0}' do not exist.", luaScriptName);
+            return null;
+        }
+        
+        //获取普通的LuaTable 也就是内部表
+        public LuaTable GetLuaTable(string luaScriptName, string luaTableName1, string luaTableName2)
+        {
+            if (m_LuaScriptCache.ContainsKey(luaScriptName))
+            {
+                LuaTable table1 = m_LuaEnv.Global.Get<LuaTable>(luaTableName1);
+                if (table1 == null)
+                {
+                    Log.Error("'{0}': Get global table '{1}' failed.",luaScriptName, luaTableName1);
+                    return null;
+                }
+                else
+                {
+                    LuaTable table2 = table1.Get<LuaTable>(luaTableName2);
+                    if (table2 == null)
+                    {
+                        Log.Error("'{0}': 通过表'{1}' 获取'{2}' failed.",luaScriptName, luaTableName1, luaTableName2);
+                    }
+                    table1.Dispose();
+                    return table2;
+                }
+            }
+            else
+            {
+                Log.Error("Lua script asset '{0}' do not exist.", luaScriptName);
+                return null;
+            }
+        }
 
-            return m_LuaEnv.DoString(luaScriptBytes, chunkName, m_LuaTable);
+        public LuaTable GetChildTable(LuaTable luaTable,string childTableName)
+        {
+            if (luaTable == null)
+            {
+                Log.Error("LuaTable is invalid.");
+                return null;
+            }
+            LuaTable table2 = luaTable.Get<LuaTable>(childTableName);
+            if (table2 == null)
+            {
+                Log.Error("'{0}': 通过表'{1}' 获取'{2}' failed.",luaTable, childTableName);
+            }
+            return table2;
+        }
+
+        //调用Lua方法
+        public void CallLuaFunction(LuaTable luaTable, string funcName, params object[] param)
+        {
+            if (luaTable != null)
+            {
+                try
+                {
+                    LuaFunction luaFunction = luaTable.Get<LuaFunction>(funcName);
+                    luaFunction.Call(param);
+                    luaFunction.Dispose();
+                    luaFunction = null;
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e.Message);
+                }
+            }
+            else
+            {
+                Log.Error("LuaTable is invalid.");
+            }
+        }
+        
+        //调用Lua方法
+        public void CallLuaFunction(string luaScriptName, string luaTableName, string funcName, params object[] parms)
+        {
+            if (m_LuaScriptCache.ContainsKey(luaScriptName))
+            {
+                try
+                {
+                    LuaTable classLuaTable = m_LuaEnv.Global.Get<LuaTable>(luaTableName);
+                    LuaFunction luaFunc = classLuaTable.Get<LuaFunction>(funcName);
+                    luaFunc.Call(parms);
+                    classLuaTable.Dispose();
+                    luaFunc.Dispose();
+                    classLuaTable = null;
+                    luaFunc = null;
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e.Message);
+                }
+            }
+            else
+            {
+                Log.Error("Lua script asset '{0}' do not exist.", luaScriptName);
+            }
         }
         
         //真正的加载Lua脚本
@@ -176,7 +293,7 @@ namespace Game
                 //真正的Lua数组器 可以用来刷新数据流
                 byte[] luaBytes = File.ReadAllBytes(luaScriptAssetName); 
 
-                //内部具体的加载
+                //内部核查加载的脚本是否符合要求
                 InternalLoadLuaScript(luaScriptName, luaScriptAssetName,luaBytes, 0f, userData);
             }
             else
@@ -209,7 +326,6 @@ namespace Game
             GameEntry.Event.Fire(this, ReferencePool.Acquire<LoadLuaScriptSuccessEventArgs>().Fill(luaScriptName, luaScriptAssetName, duration, userData));
         }
 
-        
         //加载Lua脚本成功回调 会把成功的Lua脚本缓存添加进入缓存器中
         private void LoadLuaScriptSuccessCallback(string luaScriptAssetName, object asset, float duration, object userData)
         {
@@ -233,6 +349,7 @@ namespace Game
             GameEntry.Event.Fire(this, ReferencePool.Acquire<LoadLuaScriptFailureEventArgs>().Fill(luaScriptInfo.LuaScriptName, luaScriptAssetName, appendErrorMessage, luaScriptInfo.UserData));
         }
 
+        
 #if UNITY_EDITOR
         /// <summary>
         /// 重新加载指定的Lua脚本,只在编辑器状态下可用

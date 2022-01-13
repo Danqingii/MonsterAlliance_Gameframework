@@ -16,11 +16,18 @@ namespace Game
         protected override void OnOpen(object userData)
         {
             base.OnOpen(userData);
+            
         }
 
         private void OnClosePopupClick()
         {
             GameEntry.UI.CloseUIForm(this);
+        }
+
+        protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
+        {
+            base.OnUpdate(elapseSeconds, realElapseSeconds);
+            print("执行LoginPopup");
         }
     }
 }

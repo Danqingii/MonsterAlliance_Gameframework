@@ -4,23 +4,35 @@
 --- DateTime: 2021/12/14 16:18
 ---
 ---Lua入口
+---进入的话 初始化一些数据
+---其实目前来说require 我还是没怎么看懂
+
+require "LuaDefault"
+require "LuaConfig"
+
+require "Common/Alias"
+require "Common/Find"
+
+require "Procedure/ProcedureHelp"
+require "Procedure/ProcedureLogin"
+require "Procedure/ProcedureEntry"
+
+require "UI/LuaFormManager"
+require "UI/LoginForm"
+require "UI/LoginWindow"
 
 LuaEntry = {}
 
---判断热更新
-
 function LuaEntry.OnStart()
    
-   require "LuaConfig"
-   --加载热更新
 end
 
 function LuaEntry.OnUpdate(deltaTime, unscaledDeltaTime)
-   print("进入Update:",deltaTime)
+   
 end
 
 function LuaEntry.OnFixedUpdate(deltaTime, unscaledDeltaTime)
-   print("进入OnFixedUpdate:",deltaTime)
+   
 end
 
 function LuaEntry.OnDestroy()
