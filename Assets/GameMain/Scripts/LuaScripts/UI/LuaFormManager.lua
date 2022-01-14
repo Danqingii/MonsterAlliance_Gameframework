@@ -8,15 +8,67 @@
 LuaFormManager = {}
 
 local this = LuaFormManager
+local UI = GameEntry.UI
+
 
 -- 每个Form都需要指定在这里
 this.FormToLuaNames = 
 {
-    ["LoginForm"] = "UI/LoginForm",
-    ["LoginWindow"] = "UI/LoginWindow",
+    ["LoginForm"] = "UI/Form/LoginForm",
+    ["LoginWindow"] = "UI/Form/LoginWindow",
+    ["RegisterWindow"] = "UI/Form/LoginWindow",
 }
 
 -- 每个Form初始化的时候
 -- 需要在每个界面类里面注册在这里 
 -- !!!!!!!
 this.FormClassDict = {}
+
+--是否存在界面组
+--返回一个bool
+function LuaFormManager.HasUIGroup(uiGroupName)
+    return UI:HasUIGroup(uiGroupName)
+end 
+
+--获取界面组
+--返回一个UIGroup
+function LuaFormManager.GetUIGroup(uiGroupName)
+    return UI:GetUIGroup(uiGroupName)
+end
+
+--是否拥有界面
+--返回一个bool
+--参数为int
+function LuaFormManager.HasUIForm(serialId)
+    return UI:HasUIForm(serialId)
+end
+
+--是否拥有界面
+--返回一个bool
+--参数为string
+function LuaFormManager.HasUIForm(uiFormAssetName)
+    return UI:HasUIForm(uiFormAssetName)
+end
+
+--是否拥有界面
+--返回一个bool
+--参数为int
+function LuaFormManager.GetUIForm(serialId)
+    return UI:HasUIForm(serialId)
+end
+
+--获取界面
+--返回一个UIForm
+--参数为string界面资源名称
+function LuaFormManager.GetUIForm(uiFormAssetName)
+    return UI:GetUIForm(uiFormAssetName)
+end
+
+--获取多个界面
+--返回多个UIForm
+--参数为string界面资源名称
+function LuaFormManager.GetUIForms(uiFormAssetName)
+    return UI:GetUIForm(uiFormAssetName)
+end
+
+

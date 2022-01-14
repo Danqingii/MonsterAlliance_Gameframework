@@ -160,6 +160,9 @@ namespace XLua.CSObjectWrap
             translator.DelayWrapLoader(typeof(XLuaTest.FooExtension), XLuaTestFooExtensionWrap.__Register);
         
         
+            translator.DelayWrapLoader(typeof(Game.NetworkExtension), GameNetworkExtensionWrap.__Register);
+        
+        
             translator.DelayWrapLoader(typeof(Tutorial.DerivedClass.TestEnumInner), TutorialDerivedClassTestEnumInnerWrap.__Register);
         
         
@@ -202,11 +205,24 @@ namespace XLua
 	internal partial class InternalGlobals
     {
 	    
+		delegate GameFramework.Network.INetworkChannel __GEN_DELEGATE0( UnityGameFramework.Runtime.NetworkComponent self,  string name,  int serviceType,  string ip,  int post);
+		
 	    static InternalGlobals()
 		{
 		    extensionMethodMap = new Dictionary<Type, IEnumerable<MethodInfo>>()
 			{
 			    
+				{typeof(UnityGameFramework.Runtime.NetworkComponent), new List<MethodInfo>(){
+				
+				  new __GEN_DELEGATE0(Game.NetworkExtension.CreateChannelAndConnect)
+#if UNITY_WSA && !UNITY_EDITOR
+                                      .GetMethodInfo(),
+#else
+                                      .Method,
+#endif
+				
+				}},
+				
 			};
 			
 			genTryArrayGetPtr = StaticLuaCallbacks.__tryArrayGet;

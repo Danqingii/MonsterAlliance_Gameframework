@@ -32,8 +32,8 @@ namespace Game
             TcpNetwork = UnityGameFramework.Runtime.GameEntry.GetComponent<TcpNetworkComponent>();
             Server = UnityGameFramework.Runtime.GameEntry.GetComponent<ServerComponent>();
             Lua = UnityGameFramework.Runtime.GameEntry.GetComponent<LuaComponent>();
-            //TcpNetwork.StartConnect();
             
+            //等等连接
             Server.Init("127.0.0.1",18889);
         }
     }

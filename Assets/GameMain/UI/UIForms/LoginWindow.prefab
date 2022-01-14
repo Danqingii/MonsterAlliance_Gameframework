@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 4144842450296996363}
   - component: {fileID: 4144842450296996361}
   m_Layer: 5
-  m_Name: Button_Blue
+  m_Name: Button_ConfirmLogin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -711,7 +711,7 @@ GameObject:
   - component: {fileID: 4144842450640841269}
   - component: {fileID: 4144842450640841267}
   m_Layer: 5
-  m_Name: Toggle_CheckBox
+  m_Name: Toggle_SavePw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -974,7 +974,7 @@ GameObject:
   - component: {fileID: 4144842450676685694}
   - component: {fileID: 4144842450676685695}
   m_Layer: 5
-  m_Name: InputField (TMP)
+  m_Name: Input_Pw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2104,7 +2104,7 @@ GameObject:
   - component: {fileID: 4144842451337087564}
   - component: {fileID: 4144842451337087565}
   m_Layer: 5
-  m_Name: InputField (TMP)
+  m_Name: Input_Id
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

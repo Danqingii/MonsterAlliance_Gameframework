@@ -1,1 +1,1 @@
-["LuaConfig","LuaDefault","LuaEntry","LuaMain","Common/Alias","Common/Find","Procedure/ProcedureEntry","Procedure/ProcedureHelp","Procedure/ProcedureLogin","UI/LoginForm","UI/LoginWindow","UI/LuaFormManager"]
+["LuaConfig","LuaDefault","LuaEntry","LuaMain","Common/Alias","Common/Find","Procedure/ProcedureEntry","Procedure/ProcedureHelp","Procedure/ProcedureLogin","UI/LuaFormManager","UI/Form/LoginForm","UI/Form/LoginWindow","UI/Form/RegisterWindow"]

@@ -19,10 +19,9 @@ end
 
 local waitTime = 0
 function ProcedureEntry.OnUpdate(self,elapseSeconds,realElapseSeconds)
-   waitTime = waitTime + elapseSeconds
-   if waitTime > 0.5 then
-      self:ChangeProcedureLua("Procedure/ProcedureLogin","ProcedureLogin")
-   end
+
+   --进入这个流程的时候 应该等所有的lua 脚本require一下之后 继续在跑的
+   self:ChangeProcedureLua("Procedure/ProcedureLogin","ProcedureLogin")
 end
 
 function ProcedureEntry.OnLeave(self)

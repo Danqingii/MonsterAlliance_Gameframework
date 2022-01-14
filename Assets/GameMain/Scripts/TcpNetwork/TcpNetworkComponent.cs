@@ -15,6 +15,8 @@ using AddressFamily = System.Net.Sockets.AddressFamily;
 
 namespace Game
 {
+    
+    //这个是不好的
     public class TcpNetworkComponent : GameFrameworkComponent
     {
         [SerializeField] private byte[] m_Ip = new byte[4];

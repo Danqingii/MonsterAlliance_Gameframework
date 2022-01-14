@@ -282,7 +282,6 @@ namespace Game
             string luaScriptAssetName = AssetUtility.GetLuaScriptAsset(luaScriptName);
             if (GameEntry.Base.EditorResourceMode)
             {
-                //脚本不存在 我们分发异常消息
                 if (!File.Exists(luaScriptAssetName))
                 {
                     string appendErrorMessage = $"Can not find lua script '{luaScriptAssetName}'.";

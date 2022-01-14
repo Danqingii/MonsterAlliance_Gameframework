@@ -41,8 +41,7 @@ function LoginForm.OnLoginClick()
 end
 
 function LoginForm.OnRegisterClick()
-     --GameEntry.UI:OpenUIForm(AssetUtility.GetUIFormAsset("LoginWindow"),"Window");
-     print("点击了OnRegisterClick")
+     GameEntry.UI:OpenUIForm(AssetUtility.GetUIFormAsset("RegisterWindow"),"Window");
 end
 
 function LoginForm.OnGuestModelBtnClick()

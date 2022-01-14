@@ -18,8 +18,9 @@ require "Procedure/ProcedureLogin"
 require "Procedure/ProcedureEntry"
 
 require "UI/LuaFormManager"
-require "UI/LoginForm"
-require "UI/LoginWindow"
+require "UI/Form/LoginForm"
+require "UI/Form/LoginWindow"
+require "UI/Form/RegisterWindow"
 
 LuaEntry = {}
 
