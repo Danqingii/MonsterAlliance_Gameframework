@@ -14,9 +14,10 @@ this.LoginChannel = nil --登陆频道
 
 function ProcedureLogin.OnEnter(self)
     print("ProcedureLogin 流程进入")
+    --GameEntry.UI:OpenUIForm(AssetUtility.GetUIFormAsset("LoginForm"),"Form");
    
     LoginChannel = GameEntry.Network:CreateChannelAndConnect("LoginChannel",0,"127.0.0.1",18889)
-    GameEntry.UI:OpenUIForm(AssetUtility.GetUIFormAsset("LoginForm"),"Form");
+    
 end
 
 function ProcedureLogin.OnUpdate(self,elapseSeconds,realElapseSeconds)

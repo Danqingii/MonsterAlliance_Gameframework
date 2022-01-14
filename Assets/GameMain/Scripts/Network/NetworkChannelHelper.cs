@@ -14,7 +14,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using UnityEngine;
 using UnityGameFramework.Runtime;
 
 namespace Game
@@ -161,7 +160,7 @@ namespace Game
             packetHeader.Id = packet.Id;
             packetHeader.PacketLength = (int)m_CachedStream.Length - PacketHeaderLength;
 
-            //序列化包头
+            //序列化包头 包头不用被压缩  保持大小就好了
             m_CachedStream.Position = 0;
             Serializer.SerializeWithLengthPrefix(m_CachedStream, packetHeader, PrefixStyle.Fixed32);
 
